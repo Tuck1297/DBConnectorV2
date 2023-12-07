@@ -1,6 +1,6 @@
 $enable-shadows: true;
 
-$primary: rgb(34, 193, 195);
+// $primary: rgb(34, 193, 195);
 $secondary: #ffab1c;
 $card-bg: white;
 
@@ -15,12 +15,16 @@ $navbar-light-toggler-border-color: rgba(219, 217, 213, 0.1);
 @import "../../node_modules/bootstrap/scss/bootstrap.scss";
 
 .btn-primary {
-    border: none;
-    // color: #f7f3de;
-    padding: 0.5rem;
+  border: none;
+  // color: #f7f3de;
+  padding: 0.5rem;
 }
 
 .page {
-    background: rgb(247,243,222);
-background: linear-gradient(180deg, rgba(247,243,222,0.1) 0%, rgba(255,171,28,0.3) 100%);
+  background: rgb(247, 243, 222);
+  background: linear-gradient(
+    180deg,
+    rgba(247, 243, 222, 0.1) 0%,
+    rgba(255, 171, 28, 0.3) 100%
+  );
 }
