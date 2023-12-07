@@ -1,0 +1,19 @@
+html,
+body {
+  padding: 0px;
+  margin: 0px;
+}
+
+body {
+  background: rgb(0, 0, 0);
+  background: linear-gradient(
+    0deg,
+    rgba(142, 99, 7, 1) 0%,
+    rgba(0, 0, 0, 0.89886104783599083) 100%
+  );
+  background-repeat: no-repeat;
+}
+
+.body-height {
+  height: 100vh;
+}
