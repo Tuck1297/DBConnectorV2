@@ -8,19 +8,19 @@ The initial tech stack for this application will focus on React.js and Next.js. 
 
 ### Initial Scope of the project
 
--[ ] Create a page that handles Executing database queries that have been previously saved and used
--[ ] Create a page that allows one to easily visualize data 25 rows at a time, organize the rows based by certain columns and be able to update or delete a particular row in the database.
--[ ] Select and delete multiple rows in a database
--[ ] delete a table in a database
--[ ] delete a database itself
--[ ] set up specific schemas within a database (public and other custom schemas)
--[ ] when links are involved allow one to click on a link where a new page will open up to view the direction of the link
--[ ] easily craft simple queries by interacting with a ui (even integrate a ai component eventually...)
--[ ] insert multiple rows of new data into a table at a time (unique form for this)
--[ ] upsert information to a database if it is allowed
--[ ] access every table and be able to insert any kind of value into a database (alot to consider in this one (start with common and integrate new values as they appear))
--[ ] allow options to save commonly used and accessed queries for later use in a database
+- [ ] Create a page that handles Executing database queries that have been previously saved and used
+- [ ] Create a page that allows one to easily visualize data 25 rows at a time, organize the rows based by certain columns and be able to update or delete a particular row in the database.
+- [ ] Select and delete multiple rows in a database
+- [ ] delete a table in a database
+- [ ] delete a database itself
+- [ ] set up specific schemas within a database (public and other custom schemas)
+- [ ] when links are involved allow one to click on a link where a new page will open up to view the direction of the link
+- [ ] easily craft simple queries by interacting with a ui (even integrate a ai component eventually...)
+- [ ] insert multiple rows of new data into a table at a time (unique form for this)
+- [ ] upsert information to a database if it is allowed
+- [ ] access every table and be able to insert any kind of value into a database (alot to consider in this one (start with common and integrate new values as they appear))
+- [ ] allow options to save commonly used and accessed queries for later use in a database
 
 #### when integrate into the cloud -- if I ever get this far
--[ ] be able to sign in as a particular user
--[ ] integrate google auth with next-auth library
+- [ ] be able to sign in as a particular user
+- [ ] integrate google auth with next-auth library
