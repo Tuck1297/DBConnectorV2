@@ -1,36 +1,26 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Database Connector V2 Project
 
-## Getting Started
+This project is the younger sibling of an initial idea created in participation of the .NET Aspire 2023 Hackathon. The intention of this project is to be a simple internal tool when interacting with databases being used with particular projects. Postgres is the initial database that this application will be built for, with intentions of integrating other databases as I begin working with them.
 
-First, run the development server:
+### Tech Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+The initial tech stack for this application will focus on React.js and Next.js. Styling will be done with Bootstrap.js and maybe anime.js for other animation purposes. Will also most likely use Sequelize to interact with the database in the api endpoints.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Initial Scope of the project
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+[] Create a page that handles Executing database queries that have been previously saved and used
+[] Create a page that allows one to easily visualize data 25 rows at a time, organize the rows based by certain columns and be able to update or delete a particular row in the database.
+[] Select and delete multiple rows in a database
+[] delete a table in a database
+[] delete a database itself
+[] set up specific schemas within a database (public and other custom schemas)
+[] when links are involved allow one to click on a link where a new page will open up to view the direction of the link
+[] easily craft simple queries by interacting with a ui (even integrate a ai component eventually...)
+[] insert multiple rows of new data into a table at a time (unique form for this)
+[] upsert information to a database if it is allowed
+[] access every table and be able to insert any kind of value into a database (alot to consider in this one (start with common and integrate new values as they appear))
+[] allow options to save commonly used and accessed queries for later use in a database
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+#### when integrate into the cloud -- if I ever get this far
+[] be able to sign in as a particular user
+[] integrate google auth with next-auth library
