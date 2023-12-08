@@ -1,7 +1,8 @@
 const DataView = ({}) => {
     return (
         <div>
-            <h1>Data View</h1>
+            <p className="text-white">Data View</p>
         </div>
     )
 }
+export default DataView;

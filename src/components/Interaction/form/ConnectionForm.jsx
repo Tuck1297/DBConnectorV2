@@ -1,7 +1,7 @@
 "use client";
 import Card from "@/components/bootstrap/Card";
 import TextBox from "../inputs/Textbox";
-import Button from "../inputs/ButtonComponent";
+import ButtonComponent from "../inputs/ButtonComponent";
 import Dropdown from "../inputs/Dropdown";
 import Row from "@/components/bootstrap/Row";
 import Col from "@/components/bootstrap/Col";
@@ -29,7 +29,7 @@ const ConnectionForm = () => {
           <TextBox label="Confirm Password" type="password"></TextBox>
           <Dropdown elements={["postgres", "mongodb", "sql server"]}></Dropdown>
         </Col>
-        <Button></Button>
+        <ButtonComponent></ButtonComponent>
       </Row>
     </Card>
   );

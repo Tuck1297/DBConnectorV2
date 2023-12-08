@@ -2,7 +2,7 @@
 import { useState } from "react";
 import SmallSpinner from "@/components/loading/SmallSpinner";
 
-const Button = ({
+const ButtonComponent = ({
   onSubmit = () => {},
   className = "",
   actionWord = "Button",
@@ -31,4 +31,4 @@ const Button = ({
   );
 };
 
-export default Button;
+export default ButtonComponent;

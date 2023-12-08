@@ -1,7 +1,8 @@
 const ExecuteView = () => {
   return (
     <div>
-      <h1>Execution</h1>
+      <p className="text-white">Execution</p>
     </div>
   );
 }
+export default ExecuteView;
