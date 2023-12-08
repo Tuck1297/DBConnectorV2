@@ -1,7 +1,7 @@
 "use client";
 import Card from "@/components/bootstrap/Card";
 import TextBox from "../inputs/Textbox";
-import Button from "../inputs/Button";
+import Button from "../inputs/ButtonComponent";
 import Dropdown from "../inputs/Dropdown";
 import Row from "@/components/bootstrap/Row";
 import Col from "@/components/bootstrap/Col";

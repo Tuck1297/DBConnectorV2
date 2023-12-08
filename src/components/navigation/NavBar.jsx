@@ -32,22 +32,7 @@ const Navbar = () => {
               </li>
               <li className="nav-item">
                 <NextLink className="nav-link text-white" path="/db">
-                  Database Home
-                </NextLink>
-              </li>
-              <li className="nav-item">
-                <NextLink className="nav-link text-white" path="/db/craft">
-                  Craft Query Studio
-                </NextLink>
-              </li>
-              <li className="nav-item">
-                <NextLink className="nav-link text-white" path="/db/execute">
-                  Execute Query Studio
-                </NextLink>
-              </li>
-              <li className="nav-item">
-                <NextLink className="nav-link text-white" path="/db/view">
-                    View Query Studio
+                  Database
                 </NextLink>
               </li>
             </ul>
