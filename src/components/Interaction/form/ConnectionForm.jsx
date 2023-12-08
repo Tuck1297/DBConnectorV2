@@ -7,6 +7,7 @@ import Row from "@/components/bootstrap/Row";
 import Col from "@/components/bootstrap/Col";
 import { useContext } from "react";
 import { ConnectionContext } from "@/components/context/ConnectionContext";
+import { alertService } from "@/services/alertService";
 const ConnectionForm = () => {
   const { dbConnection, setDBConnection } = useContext(ConnectionContext);
 
@@ -29,7 +30,7 @@ const ConnectionForm = () => {
           <TextBox label="Confirm Password" type="password"></TextBox>
           <Dropdown elements={["postgres", "mongodb", "sql server"]}></Dropdown>
         </Col>
-        <ButtonComponent></ButtonComponent>
+        <ButtonComponent onSubmit={() => {alertService.success("Successful Submission!!!")}}></ButtonComponent>
       </Row>
     </Card>
   );

@@ -16,6 +16,8 @@ function success(message, showAfterRedirect = false) {
         message,
         showAfterRedirect
     });
+    scrollToTop();
+    autoClose();
 }
 
 function error(message, showAfterRedirect = false) {
@@ -23,7 +25,9 @@ function error(message, showAfterRedirect = false) {
         type: 'alert-danger',
         message,
         showAfterRedirect
-    })
+    });
+    scrollToTop();
+    autoClose();
 }
 
 function warning(message, showAfterRedirect = false) {
@@ -32,6 +36,16 @@ function warning(message, showAfterRedirect = false) {
         message,
         showAfterRedirect
     })
+    scrollToTop();
+    autoClose();
+}
+
+function autoClose() {
+    setTimeout(() => clear(), 8000);
+}
+
+function scrollToTop() {
+    window.scrollTo(0, 0);
 }
 
 function clear() {
