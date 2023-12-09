@@ -1,8 +1,12 @@
+import Page from "../bootstrap/Page";
+import DatabaseIcon from "../icons/Database";
 const HomeView = () => {
   return (
-    <div>
-      <p className="text-white">Home</p>
-    </div>
+    <Page>
+      <h1 className="text-center">Home</h1>
+      <DatabaseIcon className="d-flex w-100" size="40" />
+      <p className="position-relative"></p>
+    </Page>
   );
 };
 

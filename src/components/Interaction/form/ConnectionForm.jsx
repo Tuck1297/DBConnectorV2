@@ -16,7 +16,7 @@ const ConnectionForm = () => {
   }
 
   return (
-    <Card header="DB Connection Information">
+    <Card header="DB Connection Information" className="border-none">
       <Row className="g-1">
         <Col>
           <TextBox label="Host"></TextBox>

@@ -1,7 +1,10 @@
+import Page from "../bootstrap/Page";
 const MongoDBView = () => {
-    return(
-        <div className="text-white">MongoDB View</div>
-    );
+  return (
+    <Page>
+      <h1 className="text-center">MongoDB</h1>
+    </Page>
+  );
 };
 
 export default MongoDBView;

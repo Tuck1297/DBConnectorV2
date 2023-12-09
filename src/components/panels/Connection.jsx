@@ -1,12 +1,11 @@
 import ConnectionForm from "../interaction/form/ConnectionForm";
 import CenterElement from "../bootstrap/CenterElement";
-const ConnectionView = ({ }) => {
+import Page from "../bootstrap/Page";
+const ConnectionView = ({}) => {
   return (
-    <>
-      <CenterElement>
-        <ConnectionForm />
-      </CenterElement>
-    </>
+    <Page>
+      <ConnectionForm />
+    </Page>
   );
 };
 export default ConnectionView;
