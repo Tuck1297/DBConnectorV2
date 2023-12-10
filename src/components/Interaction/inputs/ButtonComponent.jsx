@@ -8,24 +8,23 @@ const ButtonComponent = ({
   actionWord = "Button",
   type = "submit",
   isLoading = false,
-  error,
-  register
+  disabled = false,
 }) => {
   return (
     <>
       <button
-        className={`pushable w-100 ${className}`}
+        className={`pushable btn btn-primary w-100 ${className}`}
         onClick={() => {
           onSubmit();
         }}
         type={type}
-        disabled={isLoading}
+        disabled={isLoading || disabled}
       >
-        <span className="shadow" style={{color: "$yellow-600"}}></span>
+        {/* <span className="shadow" style={{color: "$yellow-600"}}></span>
         <span className="edge"></span>
-        <span className="front">
+        <span className="front"> */}
           {isLoading ? <SmallSpinner/> : actionWord}
-        </span>
+        {/* </span> */}
       </button>
     </>
   );

@@ -21,7 +21,6 @@ const Navbar = () => {
             aria-label="Toggle navigation"
           >
             <ListIcon size={30} color="white"/>
-            {/* <span className="navbar-toggler-icon"></span> */}
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mb-2 mb-lg-0 text-center" id="mainNavbar">
