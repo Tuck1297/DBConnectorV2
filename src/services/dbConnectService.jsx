@@ -56,5 +56,3 @@ async function addTableRow(rowToAdd) {
 async function addTableColumn(colToAdd) {
  return await fetchWrapper.post(baseUrl + "/table_col", colToAdd);
 }
-
-// get a particular table row

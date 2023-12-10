@@ -1,7 +1,14 @@
 // api/table_rows
 
 import { NextResponse } from "next/server";
+import { apiSetup } from "@/server/api/api-setup";
+import { errorHandler } from "@/server/api/error-handler";
 
 export async function GET(request, context) {
-    return NextResponse.json("Hello from the server! - api/table_rows");
+    try {
+        await apiSetup(request, true);
+        return NextResponse.json("Hello from the server! - api/table_rows");
+    } catch (error) {
+        errorHandler(error);
+    }
 }
