@@ -3,7 +3,7 @@ const Row = ({ children, className = "", ...props }) => {
   const combinedClasses =
     className != "" ? `row w-100 h-100 ${className}` : "row w-100 h-100";
   return (
-    <div className={combinedClasses} {...props}>
+    <div className={combinedClasses} {...props} role="row">
       {children}
     </div>
   );

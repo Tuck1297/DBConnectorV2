@@ -10,6 +10,7 @@ import { ConnectionContext } from "@/components/context/ConnectionContext";
 import { alertService } from "@/services/alertService";
 import { authSchema } from "@/hooks/yupAuth";
 import { useForm } from "react-hook-form";
+import { dbConnectService } from "@/services/dbConnectService";
 const ConnectionForm = () => {
   const { dbConnection, setDBConnection } = useContext(ConnectionContext);
   const [successfulTestConnection, setSuccessfulTestConnection] =
@@ -37,12 +38,22 @@ const ConnectionForm = () => {
     alertService.success("Connection Information Saved");
     setSuccessfulSaveConnection(true);
     setSuccessfulTestConnection(true);
+    // redirect to database connection management page
   }
 
   function testDatabaseConnection() {
-    console.log(allFields);
-    alertService.success("Connection Successful");
     setSuccessfulTestConnection(true);
+    dbConnectService
+      .testConnection(allFields)
+      .then((res) => {
+        setSuccessfulTestConnection(true);
+        alertService.success("Connection Successful");
+      })
+      .catch((err) => {
+        console.log(err);
+        alertService.error("Connection Failed: " + err);
+        setSuccessfulTestConnection(false);
+      });
   }
 
   function restart() {
@@ -71,18 +82,18 @@ const ConnectionForm = () => {
             ></TextBox>
           </Col>
           <Col>
-            <TextBox register={register} errors={errors} label="Port"></TextBox>
+            <TextBox register={register} errors={errors} label="Port" inputType="number"></TextBox>
             <TextBox
               register={register}
               errors={errors}
               label="Password"
-              type="password"
+              inputType="password"
             ></TextBox>
             <TextBox
               register={register}
               errors={errors}
               label="Confirm Password"
-              type="password"
+              inputType="password"
             ></TextBox>
             <Dropdown
               register={register}
@@ -104,6 +115,13 @@ const ConnectionForm = () => {
         }}
         className="mt-3"
         disabled={successfulTestConnection}
+      />
+      <ButtonComponent
+        actionWord="Reset"
+        onSubmit={() => {
+          restart();
+        }}
+        className="mt-3"
       />
     </Card>
   );

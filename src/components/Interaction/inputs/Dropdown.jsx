@@ -12,14 +12,16 @@ const Dropdown = ({ register = () => {}, errors = {}, elements, initial, title, 
         onChange={(e) => setVal(e.target.value)}
         disabled={disable}
         style={{height: "3.5rem"}}
+        role="combobox"
       >
         {elements.map((element, index) => (
           <option
             value={element.toLowerCase()}
             key={index}
-            disabled={element != "postgres"}
+            // disabled={element != "postgres"}
           >
-            {element} {element != "postgres" ? " ~ Not Available" : ""}
+            {element} 
+            {/* {element != "postgres" ? " ~ Not Available" : ""} */}
           </option>
         ))}
       </select>

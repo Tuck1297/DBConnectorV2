@@ -31,7 +31,7 @@ describe('Textbox', () => {
       expect(input).toHaveAttribute('type', 'email');
       expect(input).toHaveClass('form-control custom-class');
       expect(input).toHaveAttribute('placeholder', 'Enter email');
-      expect(input).toHaveAttribute('id', 'EmailInput');
+      expect(input).toHaveAttribute('id', 'emailInput');
       expect(input).toBeDisabled();
       const label = screen.getByLabelText('Email');
       expect(label).toBeInTheDocument();

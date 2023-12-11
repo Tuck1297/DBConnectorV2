@@ -10,7 +10,7 @@ const Col = ({
     className != "" ? `${className}` : ""
   }`;
   return (
-    <div className={combinedClasses} {...props}>
+    <div className={combinedClasses} {...props} role="col">
       {children}
     </div>
   );

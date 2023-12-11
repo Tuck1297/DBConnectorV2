@@ -17,8 +17,9 @@ export const dbConnectService = {
   addTableColumn,
 };
 
-async function testConnection() {
- return await fetchWrapper.get(baseUrl + "/test/connection");
+async function testConnection(connectionObj) {
+  console.log(connectionObj)
+ return await fetchWrapper.post(baseUrl + "/test/connection", connectionObj);
 }
 async function getTables() {
  return await fetchWrapper.get(baseUrl + "/tables");
