@@ -17,7 +17,7 @@ const DBPage = () => {
       {panel === "view" && <ViewPanel />}
       {panel === "execute" && <ExecutePanel />}
       {panel === "build" && <BuildPanel />}
-      {panel === "connection" && <ConnectionPanel />}
+      {panel === "connection" && <ConnectionPanel setPanel={setPanel}/>}
       {panel === "postgres" && <PostgresPanel />}
       {panel === "sql" && <SqlPanel />}
       {panel === "mongodb" && <MongodbPanel />}

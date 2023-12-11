@@ -22,7 +22,7 @@ export const dbCmdExecute = {
 async function testConnection(connectObj) {
   const connectSchema = z.object({
     host: z.string(),
-    port: z.string().max(5),
+    port: z.number(),
     user_id: z.string(),
     password: z.string(),
     confirm_password: z.string(),

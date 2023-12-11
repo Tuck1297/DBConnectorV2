@@ -1,10 +1,10 @@
 import ConnectionForm from "../interaction/form/ConnectionForm";
 import CenterElement from "../bootstrap/CenterElement";
 import Page from "../bootstrap/Page";
-const ConnectionView = ({}) => {
+const ConnectionView = ({setPanel}) => {
   return (
     <Page>
-      <ConnectionForm />
+      <ConnectionForm setPanel={setPanel} />
     </Page>
   );
 };

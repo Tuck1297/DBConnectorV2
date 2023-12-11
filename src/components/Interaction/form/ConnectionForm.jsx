@@ -11,7 +11,8 @@ import { alertService } from "@/services/alertService";
 import { authSchema } from "@/hooks/yupAuth";
 import { useForm } from "react-hook-form";
 import { dbConnectService } from "@/services/dbConnectService";
-const ConnectionForm = () => {
+import { connectService } from "@/services/connectService";
+const ConnectionForm = ({setPanel}) => {
   const { dbConnection, setDBConnection } = useContext(ConnectionContext);
   const [successfulTestConnection, setSuccessfulTestConnection] =
     useState(false);
@@ -34,11 +35,20 @@ const ConnectionForm = () => {
   const allFields = watch();
 
   function onSubmit(data) {
-    setDBConnection(data);
-    alertService.success("Connection Information Saved");
     setSuccessfulSaveConnection(true);
-    setSuccessfulTestConnection(true);
-    // redirect to database connection management page
+    connectService.create(data)
+    .then((res) => {
+      setSuccessfulSaveConnection(true);
+      setSuccessfulTestConnection(true);
+      alertService.success("Connection Information Saved");
+      setDBConnection(data);
+      setPanel("view");
+    })
+    .catch((err) => {
+      console.log(err)
+      alertService.error("Connection Information Failed to Save");
+      setSuccessfulSaveConnection(false);
+    })
   }
 
   function testDatabaseConnection() {
