@@ -1,12 +1,16 @@
-//import database for connection purposes
-// import database interaction repo 
+import { db } from "./db";
 
 export { apiSetup };
 
-async function apiSetup(request, connectToDB = false) {
-    if (connectToDB) {
-        // connect to db
-        console.log("Connecting to DB...")
+async function apiSetup(request, connectToDB = false, session = null) {
+  if (!session) {
+    throw "Operation not allowed.";
+  }
+
+  if (connectToDB) {
+    if (!db.initialized) {
+      await db.initialize();
     }
-    return;
+  }
+  return;
 }

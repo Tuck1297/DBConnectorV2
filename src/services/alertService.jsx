@@ -59,4 +59,3 @@ function clear() {
     }
     alertSubject.next(alert);
 }
-

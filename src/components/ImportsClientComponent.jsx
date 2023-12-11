@@ -8,7 +8,6 @@ import "../styles/globals.css";
 const ImportsComponent = ({ children }) => {
   const [dbConnection, setDBConnection] = useState("");
   useEffect(() => {
-    import("bootstrap/dist/js/bootstrap");
     import("bootstrap/dist/js/bootstrap.bundle.min");
   }, []);
   return (

@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 export {errorHandler};
 
 function errorHandler(error) {
+  console.log("errorHandler error", error)
     if (typeof error === "string") {
         const is404 = error.toLowerCase().includes("not found");
         const statusCode = is404 ? 404 : 400;

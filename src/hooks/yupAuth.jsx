@@ -31,7 +31,7 @@ export const authSchema = (schemaToBuild, prevSchema = {}) => {
       case "confirm_password":
         newSchema[formInput.toLowerCase()] = Yup.string().required(
           "Confirmation of Password is required"
-        );
+        ).oneOf([Yup.ref("password"), null], "Passwords must match");
         break;
       case "dropdown":
         newSchema[formInput.toLowerCase()] = Yup.string().required(

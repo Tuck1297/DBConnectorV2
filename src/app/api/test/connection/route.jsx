@@ -9,6 +9,6 @@ export async function GET(request, context) {
     await apiSetup(request, true);
     return NextResponse.json("Hello from the server! - api/test/connection");
   } catch (error) {
-    errorHandler(error);
+    return errorHandler(error);
   }
 }
