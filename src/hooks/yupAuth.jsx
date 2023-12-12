@@ -3,7 +3,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 export const authSchema = (schemaToBuild, prevSchema = {}) => {
   const newSchema = { ...prevSchema };
-
   Object.keys(schemaToBuild).forEach((formInput) => {
     switch (formInput.toLowerCase()) {
       case "host":

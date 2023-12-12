@@ -135,7 +135,7 @@
       "SELECT column1 FROM table_name WHERE column1 LIKE pattern;"
     ],
     "desc": "Search for a pattern in a column.",
-    "desc2": "Wildcards can include: %, _ \n LIKE 'a%' (find any values that start with \"a\")\n LIKE '%a' (find any values that end with \"a\")\n LIKE '%or%' (find any values that have \"or\" in any position)\n LIKE '_r%' (find any values that have \"r\" in the second position)\n LIKE 'a_%_%' (find any values that start with \"a\" and are at least 3 characters in length)\n LIKE 'a%o' (find any values that start with \"a\" and end with \"o\")"
+    "desc2": "Wildcards can include: %, _ %%%% LIKE 'a%' (find any values that start with \"a\")%%%% LIKE '%a' (find any values that end with \"a\")%%%% LIKE '%or%' (find any values that have \"or\" in any position)%%%% LIKE '_r%' (find any values that have \"r\" in the second position)%%%% LIKE 'a_%_%' (find any values that start with \"a\" and are at least 3 characters in length)%%%% LIKE 'a%o' (find any values that start with \"a\" and end with \"o\")"
   },
   "NULL": {
     "exampleQueries": [

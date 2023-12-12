@@ -1,7 +1,7 @@
 "use client";
 import Page from "../bootstrap/Page";
-import TextArea from "../Interaction/inputs/Textarea";
-import EventDropdown from "../Interaction/inputs/EventDropdown";
+import TextArea from "../interaction/inputs/Textarea";
+import EventDropdown from "../interaction/inputs/EventDropdown";
 import possiblePostgresQueries from "../../../public/examplePostgresQueries.json";
 import possiblePostgresDatatypes from "../../../public/postgresTableDatatypes.json";
 import possiblePostgresAggregates from "../../../public/postgresAggregates.json";
@@ -18,7 +18,7 @@ const BuildView = () => {
     <div>
       <Page>
         <section className="p-3">
-          <h1 className="text-center mb-4">Query Builder</h1>
+          <h1 className="text-center mb-4">Query Builder ~ PostgresSQL</h1>
           <EventDropdown
             initial="SELECT"
             elements={Object.keys(possiblePostgresQueries)}
@@ -36,17 +36,33 @@ const BuildView = () => {
             Additional Query Information
           </h2>
           {exampleQueryData.desc ? (
-            <p className="p-3 bg-light fs-5">{exampleQueryData.desc}</p>
+            <p
+              className="p-3 bg-light fs-5"
+              dangerouslySetInnerHTML={{
+                __html: exampleQueryData.desc.replaceAll("%%%%", "<br>"),
+              }}
+            ></p>
           ) : (
             <></>
           )}
           {exampleQueryData.desc2 ? (
-            <p className="p-3 bg-light fs-5">{exampleQueryData.desc2}</p>
+            <p
+              className="p-3 bg-light fs-5"
+              dangerouslySetInnerHTML={{
+                __html: exampleQueryData.desc2.replaceAll("%%%%", "<br>"),
+              }}
+            ></p>
           ) : (
             <></>
           )}
-          <Table tableData={possiblePostgresDatatypes} tableHeader="Table DataTypes"/>
-          <Table tableData={possiblePostgresAggregates} tableHeader="Aggregate Functions"/>
+          <Table
+            tableData={possiblePostgresDatatypes}
+            tableHeader="Table DataTypes"
+          />
+          <Table
+            tableData={possiblePostgresAggregates}
+            tableHeader="Aggregate Functions"
+          />
         </section>
       </Page>
     </div>

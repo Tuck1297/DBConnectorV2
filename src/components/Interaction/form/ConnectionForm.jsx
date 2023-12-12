@@ -1,7 +1,7 @@
 "use client";
 import Card from "@/components/bootstrap/Card";
 import TextBox from "../inputs/Textbox";
-import ButtonComponent from "../inputs/ButtonComponent";
+import CustomButton from "../inputs/CustomButton";
 import Dropdown from "../inputs/Dropdown";
 import Row from "@/components/bootstrap/Row";
 import Col from "@/components/bootstrap/Col";
@@ -123,13 +123,13 @@ const ConnectionForm = ({ setPanel }) => {
           NOTE: Connection to external database will be tested prior to
           credentials being stored.
         </p>
-        <ButtonComponent
+        <CustomButton
           type="submit"
           actionWord="Submit"
           disabled={successfulSaveConnection}
           className="me-2 mt-3"
         />
-        <ButtonComponent
+        <CustomButton
           type="button"
           actionWord="Reset"
           onSubmit={() => {

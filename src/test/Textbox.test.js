@@ -1,5 +1,5 @@
 import {render, screen} from '@testing-library/react';
-import Textbox from "../components/Interaction/inputs/Textbox";
+import Textbox from "../components/interaction/inputs/Textbox";
 describe('Textbox', () => {
 
     // Renders a text input with default props when no props are passed

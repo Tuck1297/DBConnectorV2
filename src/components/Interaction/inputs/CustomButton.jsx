@@ -1,8 +1,7 @@
 "use client";
-import { useState } from "react";
 import SmallSpinner from "@/components/loading/SmallSpinner";
 
-const ButtonComponent = ({
+const CustomButton = ({
   onSubmit = () => {},
   className = "",
   actionWord = "Button",
@@ -30,4 +29,4 @@ const ButtonComponent = ({
   );
 };
 
-export default ButtonComponent;
+export default CustomButton;
