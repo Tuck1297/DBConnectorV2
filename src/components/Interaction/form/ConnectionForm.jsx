@@ -9,14 +9,11 @@ import { useContext, useState } from "react";
 import { ConnectionContext } from "@/components/context/ConnectionContext";
 import { alertService } from "@/services/alertService";
 import { authSchema } from "@/hooks/yupAuth";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { dbConnectService } from "@/services/dbConnectService";
 import { connectService } from "@/services/connectService";
 import LargeSpinner from "@/components/loading/LargeSpinner";
 const ConnectionForm = ({ setPanel }) => {
-  const { dbConnection, setDBConnection } = useContext(ConnectionContext);
-  const [successfulTestConnection, setSuccessfulTestConnection] =
-    useState(false);
   const [successfulSaveConnection, setSuccessfulSaveConnection] =
     useState(false);
   const [loadingMsg, setLoadingMsg] = useState(null);
@@ -24,8 +21,8 @@ const ConnectionForm = ({ setPanel }) => {
   const schema = authSchema({
     host: true,
     port: true,
-    name: true,
-    schema: true,
+    database_name: true,
+    // schema: true,
     user_id: true,
     password: true,
     confirm_password: true,
@@ -39,31 +36,35 @@ const ConnectionForm = ({ setPanel }) => {
   function onSubmit(data) {
     setSuccessfulSaveConnection(true);
     setLoadingMsg("Testing Connection Information");
+    // remove dropdown and update to database_type
+    data.database_type = data.dropdown;
+    const {dropdown, ...updatedData} = data;
+    console.log(updatedData)
     dbConnectService
-      .testConnection(data)
+      .testConnection(updatedData)
       .then((res) => {
         // setLoadingMsg("Connection Successful");
         setLoadingMsg("Saving Connection Information");
-        return connectService.create(data);
+        return connectService.create(updatedData);
       })
       .then((res) => {
         setSuccessfulSaveConnection(true);
         alertService.success("Connection Information Saved");
-        setDBConnection(data);
         setLoadingMsg(null);
         // setPanel("view");
       })
       .catch((err) => {
         // console.log(err)
-        alertService.error("Connection Information Failed to Save");
+        alertService.error(err);
         setSuccessfulSaveConnection(false);
+        setLoadingMsg(null);
       });
   }
 
   function restart() {
     reset();
     setSuccessfulSaveConnection(false);
-    setSuccessfulTestConnection(false);
+    setLoadingMsg(null);
   }
 
   return (
@@ -75,23 +76,27 @@ const ConnectionForm = ({ setPanel }) => {
             <TextBox
               register={register}
               errors={errors}
+              label="Port"
+              inputType="number"
+            ></TextBox>
+            <TextBox
+              register={register}
+              errors={errors}
               label="User Id"
             ></TextBox>
-            <TextBox register={register} errors={errors} label="Name"></TextBox>
             <TextBox
+              register={register}
+              errors={errors}
+              label="Database Name"
+            ></TextBox>
+            {/* <TextBox
               register={register}
               errors={errors}
               label="Schema"
               placeholder="public"
-            ></TextBox>
+            ></TextBox> */}
           </Col>
           <Col>
-            <TextBox
-              register={register}
-              errors={errors}
-              label="Port"
-              inputType="number"
-            ></TextBox>
             <TextBox
               register={register}
               errors={errors}
@@ -128,6 +133,7 @@ const ConnectionForm = ({ setPanel }) => {
           actionWord="Submit"
           disabled={successfulSaveConnection}
           className="me-2 mt-3"
+          // onSubmit={() => {console.log(errors)}}
         />
         <CustomButton
           type="button"

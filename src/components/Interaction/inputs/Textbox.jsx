@@ -21,7 +21,9 @@ const TextBox = ({
         role="textbox"
         {...register(label.replace(" ", "_").toLowerCase())}
       ></input>
-      <label htmlFor={`${label.replace(" ", "_").toLowerCase()}Input`}>{label}</label>
+      <label htmlFor={`${label.replace(" ", "_").toLowerCase()}Input`}>
+        {label}
+      </label>
       <div className="invalid-feedback">
         {errors?.[label.replace(" ", "_").toLowerCase()]?.message}
       </div>

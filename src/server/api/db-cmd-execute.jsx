@@ -21,21 +21,20 @@ export const dbCmdExecute = {
 
 async function testConnection(connectObj) {
   const connectSchema = z.object({
-    host: z.string(),
-    port: z.number(),
-    user_id: z.string(),
-    password: z.string(),
-    confirm_password: z.string(),
-    schema: z.string(),
-    dropdown: z.string().max(20),
-    name: z.string(),
+    host: z.string({message: "Host is required and must be a string."}),
+    port: z.number({message:"Port is required and must be a number."}),
+    user_id: z.string({message:"User Id is required and must be a string."}),
+    password: z.string({message:"Password is required and must be a string."}),
+    confirm_password: z.string({message:"Confirm Password is required and must be a string."}),
+    database_type: z.string({message:"Database type is required and must be a string."}).max(20),
+    database_name: z.string({message:"Database name is required and must be a string."}),
   });
 
   // Parse and validate the connection object
   connectSchema.parse(connectObj);
 
   // Construct the connection string
-  const connectionString = `${connectObj.dropdown}://${connectObj.user_id}:${connectObj.password}@${connectObj.host}:${connectObj.port}/${connectObj.name}`;
+  const connectionString = `${connectObj.database_type}://${connectObj.user_id}:${connectObj.password}@${connectObj.host}:${connectObj.port}/${connectObj.database_name}`;
 
   // Create a new Sequelize instance with the connection string
   const tempSequelize = new Sequelize(connectionString, {dialectModule: pg});

@@ -6,12 +6,14 @@ import { ConnectionContext } from "@/components/context/ConnectionContext";
 import { alertService } from "@/services/alertService";
 import { useForm } from "react-hook-form";
 import { authSchema } from "@/hooks/yupAuth";
-const ExecuteForm = () => {
+import TableWithRegisteredRadioBtns from "@/components/bootstrap/TableWithRegisteredRadioBtns";
+const ExecuteForm = ({ connections }) => {
   const [numTextAreas, setNumTextAreas] = useState(["queryToExecute"]);
   const [loading, setLoading] = useState(false);
   const [schema, setSchema] = useState(authSchema({ queryToExecute: true }));
 
-  const { register, handleSubmit, formState, watch, reset, unregister } = useForm(schema);
+  const { register, handleSubmit, formState, watch, reset, unregister } =
+    useForm(schema);
   const { errors } = formState;
 
   function onSubmit(data) {
@@ -83,7 +85,18 @@ const ExecuteForm = () => {
           className="m-2"
           disabled={loading}
         />
-        <CustomButton type="button" onSubmit={() => {reset()}} actionWord="Reset" disabled={loading} />
+        <CustomButton
+          type="button"
+          onSubmit={() => {
+            reset();
+          }}
+          actionWord="Reset"
+          disabled={loading}
+        />{" "}
+        <TableWithRegisteredRadioBtns
+          tableData={connections}
+          register={register}
+        />
       </form>
     </section>
   );

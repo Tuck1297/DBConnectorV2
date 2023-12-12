@@ -7,15 +7,16 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../../../server/auth";
 import { dbConnectionManagement } from "@/server/api/db-connection-management";
 import { dbCmdExecute } from "@/server/api/db-cmd-execute";
-// export async function GET(request, context) {
-//   try {
-//     const session = await getServerSession(authOptions);
-//     await apiSetup(request, true);
-
-//   } catch (error) {
-//     return errorHandler(error);
-//   }
-// }
+export async function GET(request, context) {
+  try {
+    const session = await getServerSession(authOptions);
+    await apiSetup(request, true, session);
+    const result = await dbConnectionManagement.getAll(session.user.id);
+    return NextResponse.json(result);
+  } catch (error) {
+    return errorHandler(error);
+  }
+}
 export async function POST(request, context) {
   try {
     const session = await getServerSession(authOptions);

@@ -11,6 +11,7 @@ export default (sequelize, DataTypes) => {
         password: { type: DataTypes.STRING, allowNull: false },
         database_type: { type: DataTypes.STRING, allowNull: false, defaultValue: "postgres" },
         current_table_interacting: { type: DataTypes.STRING, allowNull: true },
+        owner_id: { type: DataTypes.UUID, allowNull: false },
     },
     );
     return Connections;

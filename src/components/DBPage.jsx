@@ -9,15 +9,15 @@ import PostgresPanel from "@/components/panels/Postgres";
 import SqlPanel from "@/components/panels/Sql";
 import MongodbPanel from "@/components/panels/Mongodb";
 import { useState } from "react";
-const DBPage = () => {
+const DBPage = ({connections}) => {
   const [panel, setPanel] = useState("home");
   return (
     <Sidebar setPanel={setPanel}>
       {panel === "home" && <HomePanel />}
       {panel === "view" && <ViewPanel />}
-      {panel === "execute" && <ExecutePanel />}
+      {panel === "execute" && <ExecutePanel connections={connections} />}
       {panel === "build" && <BuildPanel />}
-      {panel === "connection" && <ConnectionPanel setPanel={setPanel}/>}
+      {panel === "connection" && <ConnectionPanel setPanel={setPanel} connections={connections}/>}
       {panel === "postgres" && <PostgresPanel />}
       {panel === "sql" && <SqlPanel />}
       {panel === "mongodb" && <MongodbPanel />}

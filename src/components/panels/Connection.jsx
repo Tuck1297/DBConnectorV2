@@ -1,10 +1,12 @@
 import ConnectionForm from "../interaction/form/ConnectionForm";
 import CenterElement from "../bootstrap/CenterElement";
 import Page from "../bootstrap/Page";
-const ConnectionView = ({setPanel}) => {
+import Table from "../bootstrap/Table";
+const ConnectionView = ({setPanel, connections}) => {
   return (
     <Page>
       <ConnectionForm setPanel={setPanel} />
+      <Table tableData={connections} tableHeader="Existing Connections"/>
     </Page>
   );
 };

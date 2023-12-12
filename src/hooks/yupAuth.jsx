@@ -11,7 +11,7 @@ export const authSchema = (schemaToBuild, prevSchema = {}) => {
       case "port":
         newSchema[formInput.toLowerCase()] = Yup.number().required("Port is required");
         break;
-      case "name":
+      case "database_name":
         newSchema[formInput.toLowerCase()] = Yup.string().required(
           "Database name is required"
         );
