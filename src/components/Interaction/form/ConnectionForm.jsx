@@ -45,22 +45,24 @@ const ConnectionForm = ({setPanel}) => {
       setPanel("view");
     })
     .catch((err) => {
-      console.log(err)
+      // console.log(err)
       alertService.error("Connection Information Failed to Save");
       setSuccessfulSaveConnection(false);
     })
   }
 
   function testDatabaseConnection() {
+    let allData = allFields;
+    allData.port = parseInt(allData.port);
     setSuccessfulTestConnection(true);
     dbConnectService
-      .testConnection(allFields)
+      .testConnection(allData)
       .then((res) => {
         setSuccessfulTestConnection(true);
         alertService.success("Connection Successful");
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         alertService.error("Connection Failed: " + err);
         setSuccessfulTestConnection(false);
       });

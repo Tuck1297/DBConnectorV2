@@ -11,7 +11,7 @@ export const dbConnectionManagement = {
   updateUserCurrentInteracting,
 };
 
-async function create(connectObj) {
+async function create(connectObj, userId) {
   const connectSchema = z.object({
     host: z.string(),
     port: z.number(),
@@ -22,9 +22,11 @@ async function create(connectObj) {
     dropdown: z.string().max(20),
     name: z.string(),
   });
+  const userIdSchema = z.string().uuid({ message: "Invalid ID" });
 
   // Parse and validate the connection object
   connectSchema.parse(connectObj);
+  userIdSchema.parse(userId);
 
   const id = uuidv4();
   connectObj.id = id;
@@ -36,6 +38,9 @@ async function create(connectObj) {
   // Create a new Sequelize object and save to database
   const connectionObj = new db.ConnectingInfo(connectObj);
   await connectionObj.save();
+
+  // Update the user's current interacting db
+  await updateUserCurrentInteracting(userId, id);
 }
 async function _delete(id) {
   const connectSchema = z.string().uuid({ message: "Invalid ID" });

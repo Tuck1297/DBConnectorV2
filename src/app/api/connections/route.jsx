@@ -28,7 +28,7 @@ export async function POST(request, context) {
         { status: 400 }
       );
     }
-    await dbConnectionManagement.create(connectObj);
+    await dbConnectionManagement.create(connectObj, session.user.id);
 
     return NextResponse.json(
       { message: "Connection created successfully" },

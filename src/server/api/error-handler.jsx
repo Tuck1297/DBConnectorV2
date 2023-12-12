@@ -15,7 +15,7 @@ function errorHandler(error) {
     let message = err.issues[0].message;
     let is404 = 404;
     if (message.indexOf("must") <= -1 || message.indexOf("expected") <= -1) {
-      console.log("is 400 message");
+      // console.log("is 400 message");
       is404 = 400;
     }
     return NextResponse.json({ message }, { status: is404 });
