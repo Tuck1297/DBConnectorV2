@@ -13,7 +13,7 @@ const ButtonComponent = ({
   return (
     <>
       <button
-        className={`pushable btn btn-primary w-100 ${className}`}
+        className={`pushable btn btn-primary ${className}`}
         onClick={() => {
           onSubmit();
         }}

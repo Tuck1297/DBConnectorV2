@@ -1,0 +1,72 @@
+[
+  {
+    "name": "AVG",
+    "explanation": "Calculates the average of a set of values.",
+    "example": "AVG(1, 2, 3, 4, 5) returns 3"
+  },
+  {
+    "name": "COUNT",
+    "explanation": "Counts the number of values in a set of values.",
+    "example": "COUNT(1, 2, 3, 4, 5) returns 5"
+  },
+  {
+    "name": "MAX",
+    "explanation": "Returns the maximum value in a set of values.",
+    "example": "MAX(1, 2, 3, 4, 5) returns 5"
+  },
+  {
+    "name": "MIN",
+    "explanation": "Returns the minimum value in a set of values.",
+    "example": "MIN(1, 2, 3, 4, 5) returns 1"
+  },
+  {
+    "name": "SUM",
+    "explanation": "Calculates the sum of a set of values.",
+    "example": "SUM(1, 2, 3, 4, 5) returns 15"
+  },
+  {
+    "name": "ARRAY_AGG",
+    "explanation": "Aggregates values into an array.",
+    "example": "ARRAY_AGG(1, 2, 3, 4, 5) returns [1, 2, 3, 4, 5]"
+  },
+  {
+    "name": "STRING_AGG",
+    "explanation": "Aggregates values into a string, separated by a delimiter.",
+    "example": "STRING_AGG(1, 2, 3, 4, 5) returns \"1, 2, 3, 4, 5\""
+  },
+  {
+    "name": "JSON_AGG",
+    "explanation": "Aggregates values into a JSON array.",
+    "example": "JSON_AGG(1, 2, 3, 4, 5) returns [1, 2, 3, 4, 5]"
+  },
+  {
+    "name": "JSONB_AGG",
+    "explanation": "Aggregates values into a JSONB array.",
+    "example": "JSONB_AGG(1, 2, 3, 4, 5) returns [1, 2, 3, 4, 5]"
+  },
+  {
+    "name": "JSON_OBJECT_AGG",
+    "explanation": "Aggregates values into a JSON object.",
+    "example": "JSON_OBJECT_AGG(1, 2, 3, 4, 5) returns {\"1\": 2, \"3\": 4, \"5\": null}"
+  },
+  {
+    "name": "VAR_POP",
+    "explanation": "Calculates the population variance of a set of values.",
+    "example": "VAR_POP(1, 2, 3, 4, 5) returns 2"
+  },
+  {
+    "name": "VAR_SAMP",
+    "explanation": "Calculates the sample variance of a set of values.",
+    "example": "VAR_SAMP(1, 2, 3, 4, 5) returns 2.5"
+  },
+  {
+    "name": "STDDEV_POP",
+    "explanation": "Calculates the population standard deviation of a set of values.",
+    "example": "STDDEV_POP(1, 2, 3, 4, 5) returns 1.4142135623730951"
+  },
+  {
+    "name": "STDDEV_SAMP",
+    "explanation": "Calculates the sample standard deviation of a set of values.",
+    "example": "STDDEV_SAMP(1, 2, 3, 4, 5) returns 1.5811388300841898"
+  }
+]

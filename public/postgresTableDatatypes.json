@@ -1,0 +1,237 @@
+[
+  {
+    "name": "SERIAL",
+    "explanation": "Auto-incrementing integer typically used for primary keys.",
+    "example": "id SERIAL PRIMARY KEY"
+  },
+  {
+    "name": "VARCHAR",
+    "explanation": "Variable-length character string.",
+    "example": "varchar_column VARCHAR(255)"
+  },
+  {
+    "name": "TEXT",
+    "explanation": "Variable-length character string with no limit.",
+    "example": "text_column TEXT"
+  },
+  {
+    "name": "INT",
+    "explanation": "32-bit signed integer.",
+    "example": "integer_column INT"
+  },
+  {
+    "name": "BIGINT",
+    "explanation": "64-bit signed integer.",
+    "example": "bigint_column BIGINT"
+  },
+  {
+    "name": "DECIMAL",
+    "explanation": "Fixed-point number.",
+    "example": "decimal_column DECIMAL(5,2)"
+  },
+  {
+    "name": "SMALLINT",
+    "explanation": "16-bit signed integer.",
+    "example": "smallint_column SMALLINT"
+  },
+  {
+    "name": "NUMERIC",
+    "explanation": "Variable precision decimal number.",
+    "example": "numeric_column NUMERIC(10,2)"
+  },
+  {
+    "name": "CHAR",
+    "explanation": "Fixed-length character string.",
+    "example": "char_column CHAR(10)"
+  },
+  {
+    "name": "REAL",
+    "explanation": "Single precision floating-point number.",
+    "example": "real_column REAL"
+  },
+  {
+    "name": "DOUBLE PRECISION",
+    "explanation": "Double precision floating-point number.",
+    "example": "double_precision_column DOUBLE PRECISION"
+  },
+  {
+    "name": "VARCHAR ARRAY",
+    "explanation": "Array of variable-length character strings.",
+    "example": "varchar_array_column VARCHAR(255)[]"
+  },
+  {
+    "name": "TEXT ARRAY",
+    "explanation": "Array of variable-length text strings.",
+    "example": "text_array_column TEXT[]"
+  },
+  {
+    "name": "INTEGER ARRAY",
+    "explanation": "Array of 32-bit signed integers.",
+    "example": "integer_array_column INT[]"
+  },
+  {
+    "name": "BOOLEAN ARRAY",
+    "explanation": "Array of logical Booleans (true/false).",
+    "example": "boolean_array_column BOOLEAN[]"
+  },
+  {
+    "name": "HSTORE",
+    "explanation": "Stores a set of key-value pairs.",
+    "example": "hstore_column HSTORE"
+  },
+  {
+    "name": "BOOLEAN",
+    "explanation": "Logical Boolean (true/false).",
+    "example": "boolean_column BOOLEAN"
+  },
+  {
+    "name": "DATE",
+    "explanation": "Date (without time).",
+    "example": "date_column DATE"
+  },
+  {
+    "name": "TIMESTAMP",
+    "explanation": "Date and time.",
+    "example": "timestamp_column TIMESTAMP"
+  },
+  {
+    "name": "TIMESTAMP WITH TIME ZONE",
+    "explanation": "Date and time with time zone.",
+    "example": "timestamp_tz_column TIMESTAMP WITH TIME ZONE"
+  },
+  {
+    "name": "TIME",
+    "explanation": "Time of day (no date).",
+    "example": "time_column TIME"
+  },
+  {
+    "name": "TIME WITH TIME ZONE",
+    "explanation": "Time of day (no date) with time zone.",
+    "example": "time_tz_column TIME WITH TIME ZONE"
+  },
+  {
+    "name": "INTERVAL",
+    "explanation": "Time interval.",
+    "example": "interval_column INTERVAL"
+  },
+  {
+    "name": "UUID",
+    "explanation": "UUID (Universally Unique IDentifier).",
+    "example": "uuid_column UUID"
+  },
+  {
+    "name": "JSON",
+    "explanation": "Textual JSON data.",
+    "example": "json_column JSON"
+  },
+  {
+    "name": "JSONB",
+    "explanation": "Binary JSON data, decomposed.",
+    "example": "jsonb_column JSONB"
+  },
+  {
+    "name": "BYTEA",
+    "explanation": "Binary data.",
+    "example": "bytea_column BYTEA"
+  },
+  {
+    "name": "POINT",
+    "explanation": "Geometric point in a 2D plane.",
+    "example": "point_column POINT"
+  },
+  {
+    "name": "LINE SEGMENT",
+    "explanation": "Geometric line segment in a 2D plane.",
+    "example": "line_segment_column LSEG"
+  },
+  {
+    "name": "BOX",
+    "explanation": "Geometric rectangle in a 2D plane.",
+    "example": "box_column BOX"
+  },
+  {
+    "name": "PATH",
+    "explanation": "Geometric path in a 2D plane.",
+    "example": "path_column PATH"
+  },
+  {
+    "name": "POLYGON",
+    "explanation": "Geometric polygon in a 2D plane.",
+    "example": "polygon_column POLYGON"
+  },
+  {
+    "name": "CIRCLE",
+    "explanation": "Geometric circle in a 2D plane.",
+    "example": "circle_column CIRCLE"
+  },
+  {
+    "name": "INET",
+    "explanation": "IPv4 or IPv6 network address.",
+    "example": "inet_column INET"
+  },
+  {
+    "name": "CIDR",
+    "explanation": "IPv4 or IPv6 network address with network mask.",
+    "example": "cidr_column CIDR"
+  },
+  {
+    "name": "MACADDR",
+    "explanation": "MAC (Media Access Control) address.",
+    "example": "macaddr_column MACADDR"
+  },
+  {
+    "name": "BIT",
+    "explanation": "Fixed-length bit string.",
+    "example": "bit_column BIT(8)"
+  },
+  {
+    "name": "BIT VARYING",
+    "explanation": "Variable-length bit string.",
+    "example": "bit_varying_column BIT VARYING(16)"
+  },
+  {
+    "name": "TSVECTOR",
+    "explanation": "Text search vector.",
+    "example": "tsvector_column TSVECTOR"
+  },
+  {
+    "name": "TSQUERY",
+    "explanation": "Text search query.",
+    "example": "tsquery_column TSQUERY"
+  },
+  {
+    "name": "XML",
+    "explanation": "XML data.",
+    "example": "xml_column XML"
+  },
+  {
+    "name": "BYTEA",
+    "explanation": "Binary data.",
+    "example": "bytea_column BYTEA"
+  },
+  {
+    "name": "OID",
+    "explanation": "Object identifier.",
+    "example": "oid_column OID"
+  },
+  {
+    "name": "MONEY",
+    "explanation": "Currency amount.",
+    "example": "money_column MONEY"
+  },
+  {
+    "name": "CITEXT",
+    "explanation": "Case-insensitive text.",
+    "example": "citext_column CITEXT"
+  },
+  {
+    "name": "ENUM",
+    "explanation": "Enumerated type.",
+    "example": "enum_column ENUM(\"value1\", \"value2\", \"value3\")"
+  },
+  {
+    "name": "COMPOSITE TYPE",
+    "explanation": "User-defined composite type.",
+    "example": "composite_type_column example_composite_type"
+  }
+]

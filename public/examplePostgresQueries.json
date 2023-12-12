@@ -1,0 +1,152 @@
+{
+  "SELECT": {
+    "exampleQueries": [
+      "SELECT column1, column2 FROM table_name WHERE conditions"
+    ],
+    "desc": "Retrieve data from a table.",
+    "desc2": "Conditions can include: =, !=, <, >, <=, >=, AND, OR, NOT, BETWEEN, LIKE, IN, IS NULL"
+  },
+  "INSERT": {
+    "exampleQueries": [
+      "INSERT INTO table_name (column1, column2) VALUES (value1, value2)"
+    ],
+    "desc": "Add new records to a table."
+  },
+  "UPDATE": {
+    "exampleQueries": [
+      "UPDATE table_name SET column1 = value1 WHERE condition;"
+    ],
+    "desc": "Modify existing records in a table.",
+    "desc2": "Conditions can include: =, !=, <, >, <=, >=, AND, OR, NOT, BETWEEN, LIKE, IN, IS NULL"
+  },
+  "DELETE": {
+    "exampleQueries": ["DELETE FROM table_name WHERE condition;"],
+    "desc": "Remove records from a table.",
+    "desc2": "Conditions can include: =, !=, <, >, <=, >=, AND, OR, NOT, BETWEEN, LIKE, IN, IS NULL"
+  },
+  "CREATE": {
+    "exampleQueries": [
+      "CREATE TABLE table_name (column1 datatype1, column2 datatype2);"
+    ],
+    "desc": "Create a new table with different properties.",
+    "desc2": "Datatypes can include: INT, VARCHAR(size), BOOLEAN, DATE, TEXT, FLOAT, DATE, TIME, TIMESTAMP, etc... See more below."
+  },
+  "UPSERT": {
+    "exampleQueries": [
+      "INSERT INTO table_name (column1, column2) VALUES (value1, value2) ON CONFLICT (conflict_column) DO UPDATE SET column1 = value1;"
+    ],
+    "desc": "Insert new records of update existing records."
+  },
+  "DROP": {
+    "exampleQueries": ["DROP TABLE table_name;"],
+    "desc": "Delete a table."
+  },
+  "ALTER": {
+    "exampleQueries": [
+      "ALTER TABLE table_name ADD COLUMN new_column datatype;"
+    ],
+    "desc": "Add a column to a table.",
+    "desc2": "Datatypes can include: INT, VARCHAR(size), BOOLEAN, DATE, TEXT, FLOAT, DATE, TIME, TIMESTAMP, etc... See more below."
+  },
+  "TRUNCATE": {
+    "exampleQueries": ["TRUNCATE table_name;"],
+    "desc": "Remove all rows from a table."
+  },
+  "JOIN": {
+    "exampleQueries": [
+      "SELECT table1.column1, table2.column2 FROM table1 INNER JOIN table2 ON table1.common_column = table2.common_column;"
+    ],
+    "desc": "Combine rows from two or more tables, based on a common column between them."
+  },
+  "UNION": {
+    "exampleQueries": [
+      "SELECT column1 FROM table1 UNION SELECT column1 FROM table2;"
+    ],
+    "desc": "Combine the result sets of two or more SELECT statements (only distinct values)."
+  },
+  "INTERSECT": {
+    "exampleQueries": [
+      "SELECT column1 FROM table1 INTERSECT SELECT column1 FROM table2;"
+    ],
+    "desc": "Return the common rows between two SELECT statements (only distinct values)."
+  },
+  "EXCEPT": {
+    "exampleQueries": [
+      "SELECT column1 FROM table1 EXCEPT SELECT column1 FROM table2;"
+    ],
+    "desc": "Return the rows from the first SELECT statement that are not returned by the second SELECT statement."
+  },
+  "Subquery Example": {
+    "exampleQueries": [
+      "SELECT column1 FROM table_name WHERE column2 IN (SELECT column2 FROM another_table WHERE condition);"
+    ],
+    "desc": "Use a subquery to filter results."
+  },
+  "Aggregate function Example": {
+    "exampleQueries": ["SELECT COUNT(column1) FROM table_name;"],
+    "desc": "Use an aggregate function to perform a calculation on a set of values and return a single value.",
+    "desc2": "Aggregate functions can include: AVG, COUNT, MIN, MAX, SUM, etc... See more below."
+  },
+  "GROUP BY": {
+    "exampleQueries": [
+      "SELECT column1, COUNT(*) FROM table_name GROUP BY column1;"
+    ],
+    "desc": "Group rows that have the same values into summary rows, like \"find the number of customers in each country\"."
+  },
+  "LIMIT": {
+    "exampleQueries": ["SELECT column1 FROM table_name LIMIT 10;"],
+    "desc": "Limit the number of rows returned by a query."
+  },
+  "ORDER BY": {
+    "exampleQueries": [
+      "SELECT column1 FROM table_name ORDER BY column1 DESC;",
+      "SELECT column1 FROM table_name WHERE conditions ORDER BY column1 ASC, column2 DESC;"
+    ],
+    "desc": "Sort the result set in ascending (ASC) or descending (DESC) order."
+  },
+  "UNIQUE": {
+    "exampleQueries": [
+      "CREATE TABLE table_name (column1 datatype1, column2 datatype2, UNIQUE(column1));"
+    ],
+    "desc": "Specify that the values in a column (or a group of columns) must be unique."
+  },
+  "AS": {
+    "exampleQueries": ["SELECT column1 AS 'Alias' FROM table_name;"],
+    "desc": "Use an alias to rename a column or table."
+  },
+  "DISTINCT": {
+    "exampleQueries": ["SELECT DISTINCT column1 FROM table_name;"],
+    "desc": "Return only distinct (different) values."
+  },
+  "BETWEEN": {
+    "exampleQueries": [
+      "SELECT column1 FROM table_name WHERE column1 BETWEEN value1 AND value2;"
+    ],
+    "desc": "Select values within a given range."
+  },
+  "IN": {
+    "exampleQueries": [
+      "SELECT column1 FROM table_name WHERE column1 IN (value1, value2);"
+    ],
+    "desc": "Check whether a value is within a set of values."
+  },
+  "LIKE": {
+    "exampleQueries": [
+      "SELECT column1 FROM table_name WHERE column1 LIKE pattern;"
+    ],
+    "desc": "Search for a pattern in a column.",
+    "desc2": "Wildcards can include: %, _ \n LIKE 'a%' (find any values that start with \"a\")\n LIKE '%a' (find any values that end with \"a\")\n LIKE '%or%' (find any values that have \"or\" in any position)\n LIKE '_r%' (find any values that have \"r\" in the second position)\n LIKE 'a_%_%' (find any values that start with \"a\" and are at least 3 characters in length)\n LIKE 'a%o' (find any values that start with \"a\" and end with \"o\")"
+  },
+  "NULL": {
+    "exampleQueries": [
+      "SELECT column1 FROM table_name WHERE column1 IS NULL;"
+    ],
+    "desc": "Check whether a value is NULL."
+  },
+  "NOT NULL": {
+    "exampleQueries": [
+      "SELECT column1 FROM table_name WHERE column1 IS NOT NULL;"
+    ],
+    "desc": "Check whether a value is not NULL."
+  }
+}

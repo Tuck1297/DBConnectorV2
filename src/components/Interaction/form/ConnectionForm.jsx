@@ -12,12 +12,14 @@ import { authSchema } from "@/hooks/yupAuth";
 import { useForm } from "react-hook-form";
 import { dbConnectService } from "@/services/dbConnectService";
 import { connectService } from "@/services/connectService";
-const ConnectionForm = ({setPanel}) => {
+import LargeSpinner from "@/components/loading/LargeSpinner";
+const ConnectionForm = ({ setPanel }) => {
   const { dbConnection, setDBConnection } = useContext(ConnectionContext);
   const [successfulTestConnection, setSuccessfulTestConnection] =
     useState(false);
   const [successfulSaveConnection, setSuccessfulSaveConnection] =
     useState(false);
+  const [loadingMsg, setLoadingMsg] = useState(null);
 
   const schema = authSchema({
     host: true,
@@ -36,35 +38,25 @@ const ConnectionForm = ({setPanel}) => {
 
   function onSubmit(data) {
     setSuccessfulSaveConnection(true);
-    connectService.create(data)
-    .then((res) => {
-      setSuccessfulSaveConnection(true);
-      setSuccessfulTestConnection(true);
-      alertService.success("Connection Information Saved");
-      setDBConnection(data);
-      setPanel("view");
-    })
-    .catch((err) => {
-      // console.log(err)
-      alertService.error("Connection Information Failed to Save");
-      setSuccessfulSaveConnection(false);
-    })
-  }
-
-  function testDatabaseConnection() {
-    let allData = allFields;
-    allData.port = parseInt(allData.port);
-    setSuccessfulTestConnection(true);
+    setLoadingMsg("Testing Connection Information");
     dbConnectService
-      .testConnection(allData)
+      .testConnection(data)
       .then((res) => {
-        setSuccessfulTestConnection(true);
-        alertService.success("Connection Successful");
+        // setLoadingMsg("Connection Successful");
+        setLoadingMsg("Saving Connection Information");
+        return connectService.create(data);
+      })
+      .then((res) => {
+        setSuccessfulSaveConnection(true);
+        alertService.success("Connection Information Saved");
+        setDBConnection(data);
+        setLoadingMsg(null);
+        // setPanel("view");
       })
       .catch((err) => {
-        // console.log(err);
-        alertService.error("Connection Failed: " + err);
-        setSuccessfulTestConnection(false);
+        // console.log(err)
+        alertService.error("Connection Information Failed to Save");
+        setSuccessfulSaveConnection(false);
       });
   }
 
@@ -94,7 +86,12 @@ const ConnectionForm = ({setPanel}) => {
             ></TextBox>
           </Col>
           <Col>
-            <TextBox register={register} errors={errors} label="Port" inputType="number"></TextBox>
+            <TextBox
+              register={register}
+              errors={errors}
+              label="Port"
+              inputType="number"
+            ></TextBox>
             <TextBox
               register={register}
               errors={errors}
@@ -113,28 +110,34 @@ const ConnectionForm = ({setPanel}) => {
               elements={["postgres", "mongodb", "sql server"]}
             ></Dropdown>
           </Col>
-
-          <ButtonComponent
-            actionWord="Submit"
-            disabled={successfulSaveConnection}
-          />
         </Row>
+        {loadingMsg ? (
+          <section className="d-flex">
+            <LargeSpinner />
+            <p className="fs-4 ps-4">{loadingMsg}</p>
+          </section>
+        ) : (
+          ""
+        )}
+        <p>
+          NOTE: Connection to external database will be tested prior to
+          credentials being stored.
+        </p>
+        <ButtonComponent
+          type="submit"
+          actionWord="Submit"
+          disabled={successfulSaveConnection}
+          className="me-2 mt-3"
+        />
+        <ButtonComponent
+          type="button"
+          actionWord="Reset"
+          onSubmit={() => {
+            restart();
+          }}
+          className="mt-3"
+        />
       </form>
-      <ButtonComponent
-        actionWord="Test Connection"
-        onSubmit={() => {
-          testDatabaseConnection();
-        }}
-        className="mt-3"
-        disabled={successfulTestConnection}
-      />
-      <ButtonComponent
-        actionWord="Reset"
-        onSubmit={() => {
-          restart();
-        }}
-        className="mt-3"
-      />
     </Card>
   );
 };
