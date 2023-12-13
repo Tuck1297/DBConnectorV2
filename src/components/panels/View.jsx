@@ -8,11 +8,11 @@ const testData = [
   {id: 4, name: "test4", description: "test4 desc"},
   {id: 5, name: "test5", description: "test5 desc"},
 ]
-const DataView = ({}) => {
+const DataView = ({setModal}) => {
   return (
     <Page>
       <h1 className="text-center">View Selected Data</h1>
-      <ManageViewTable data={testData} tableHeader="Test Data"/>
+      <ManageViewTable data={testData} tableHeader="Test Data" setModal={setModal}/>
     </Page>
   );
 };

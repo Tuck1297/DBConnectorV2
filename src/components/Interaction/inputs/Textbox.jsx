@@ -1,4 +1,5 @@
 // inputType = Password, Text, Email
+import { useState } from "react";
 const TextBox = ({
   inputType = "text",
   className = "",
@@ -6,11 +7,22 @@ const TextBox = ({
   label = "",
   disabled = false,
   register = () => {},
+  input = undefined,
   errors = {},
+  onChange = (e) => {
+    e.preventDefault();
+    console.log(e.target.value);
+    setInputValue(e.target.value);
+  },
 }) => {
+  // const [inputValue, setInputValue] = useState(input);
   return (
     <section className="mb-3 form-floating">
       <input
+        value={input}
+        onChange={(e) => {
+          console.log(e.target.value);
+        }}
         type={inputType}
         className={`form-control ${className} ${
           errors?.[label.replace(" ", "_").toLowerCase()] ? "is-invalid" : ""

@@ -8,6 +8,7 @@ const CustomButton = ({
   type = "submit",
   isLoading = false,
   disabled = false,
+  ...props
 }) => {
   return (
     <>
@@ -18,6 +19,7 @@ const CustomButton = ({
         }}
         type={type}
         disabled={isLoading || disabled}
+        {...props}
       >
         {/* <span className="shadow" style={{color: "$yellow-600"}}></span>
         <span className="edge"></span>
