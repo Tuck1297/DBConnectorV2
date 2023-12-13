@@ -7,6 +7,7 @@ import { alertService } from "@/services/alertService";
 import { useForm } from "react-hook-form";
 import { authSchema } from "@/hooks/yupAuth";
 import TableWithRegisteredRadioBtns from "@/components/bootstrap/TableWithRegisteredRadioBtns";
+import { dbConnectService } from "@/services/dbConnectService";
 const ExecuteForm = ({ connections }) => {
   const [numTextAreas, setNumTextAreas] = useState(["queryToExecute"]);
   const [loading, setLoading] = useState(false);
@@ -16,12 +17,19 @@ const ExecuteForm = ({ connections }) => {
     useForm(schema);
   const { errors } = formState;
 
-  function onSubmit(data) {
-    console.log(data);
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 3000);
+  async function onSubmit(data) {
+    await dbConnectService.executeCustomQueries(data)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+    // console.log(data);
+    // setLoading(true);
+    // setTimeout(() => {
+    //   setLoading(false);
+    // }, 3000);
   }
 
   return (
@@ -92,7 +100,7 @@ const ExecuteForm = ({ connections }) => {
           }}
           actionWord="Reset"
           disabled={loading}
-        />{" "}
+        />
         <TableWithRegisteredRadioBtns
           tableData={connections}
           register={register}

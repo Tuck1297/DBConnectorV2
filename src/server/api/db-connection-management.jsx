@@ -10,6 +10,7 @@ export const dbConnectionManagement = {
   update,
   getConnection,
   updateUserCurrentInteracting,
+  updateTableCurrentInteracting,
   getAll,
 };
 
@@ -82,6 +83,7 @@ async function _delete(id) {
 }
 async function update(connectObj) {
   const connectSchema = z.object({
+    id: z.string().uuid({ message: "Invalid ID" }),
     host: z.string({ message: "Host is required and must be a string." }),
     port: z.number({ message: "Port is required and must be a number." }),
     user_id: z.string({ message: "User Id is required and must be a string." }),
@@ -120,6 +122,14 @@ async function updateUserCurrentInteracting(userId, connectionId) {
   const user = await db.User.findByPk(userId);
   user.current_db_interacting = connectionId;
   await user.save();
+}
+
+async function updateTableCurrentInteracting(connectionId, tableName) {
+  const connectionSchema = z.string().uuid({ message: "Invalid ID" });
+  connectionSchema.parse(connectionId);
+  const connection = await db.ConnectingInfo.findByPk(connectionId);
+  connection.current_table_interacting = tableName;
+  await connection.save();
 }
 
 async function getAll(userId) {

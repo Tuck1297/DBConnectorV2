@@ -15,7 +15,8 @@ export const dbConnectService = {
   addTable,
   addTableRow,
   addTableColumn,
-};
+  executeCustomQueries
+}; 
 
 async function testConnection(connectionObj) {
   // console.log(connectionObj)
@@ -30,8 +31,8 @@ async function getTableRows() {
 async function getTableColumns() {
  return await fetchWrapper.get(baseUrl + "/table_cols");
 }
-async function updateTableRow(toUpdate) {
- return await fetchWrapper.put(baseUrl + "/table_row", toUpdate);
+async function updateTableRow(toUpdate, oldRow) {
+ return await fetchWrapper.put(baseUrl + "/table_row", {update: toUpdate, old: oldRow});
 }
 async function updateTableCol(toUpdate) {
  return await fetchWrapper.put(baseUrl + "/table_col", toUpdate);
@@ -56,4 +57,8 @@ async function addTableRow(rowToAdd) {
 }
 async function addTableColumn(colToAdd) {
  return await fetchWrapper.post(baseUrl + "/table_col", colToAdd);
+}
+
+async function executeCustomQueries(queries) {
+ return await fetchWrapper.post(baseUrl + "/custom_queries", queries);
 }

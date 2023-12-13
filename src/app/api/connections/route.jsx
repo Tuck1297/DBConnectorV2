@@ -29,51 +29,43 @@ export async function POST(request, context) {
         { status: 400 }
       );
     }
-    const newConnection = await dbConnectionManagement.create(connectObj, session.user.id);
-
-    return NextResponse.json(
-      newConnection,
-      { status: 200 }
+    const newConnection = await dbConnectionManagement.create(
+      connectObj,
+      session.user.id
     );
+
+    return NextResponse.json(newConnection, { status: 200 });
   } catch (error) {
     return errorHandler(error);
   }
 }
 export async function PUT(request, context) {
-  try {
-    const session = await getServerSession(authOptions);
-    await apiSetup(request, true, session);
-    const connectObj = await request.json();
-    let result = await dbConnectionManagement.update(connectObj);
-    if (result) {
-      return NextResponse.json(
-        { message: "Connection updated successfully" },
-        { status: 200 }
-      );
-    }
-    return NextResponse.json(
-      { message: "Connection could not be updated" },
-      { status: 400 }
-    );
-  } catch (error) {
-    return errorHandler(error);
-  }
+  return NextResponse.json(
+    { message: "Not availible" },
+    { status: 400 }
+  );
+  // try {
+  //   const session = await getServerSession(authOptions);
+  //   await apiSetup(request, true, session);
+  //   const connectObj = await request.json();
+  //   await dbConnectionManagement.update(connectObj);
+  //   return NextResponse.json(
+  //     { message: "Connection updated successfully" },
+  //     { status: 200 }
+  //   );
+  // } catch (error) {
+  //   return errorHandler(error);
+  // }
 }
 export async function DELETE(request, context) {
   try {
     const session = await getServerSession(authOptions);
     await apiSetup(request, true, session);
     const deleteId = await request.json();
-    let result = await dbConnectionManagement.delete(deleteId);
-    if (result) {
-      return NextResponse.json(
-        { message: "Connection deleted successfully" },
-        { status: 200 }
-      );
-    }
+    await dbConnectionManagement.delete(deleteId);
     return NextResponse.json(
-      { message: "Connection could not be deleted" },
-      { status: 400 }
+      { message: "Connection deleted successfully" },
+      { status: 200 }
     );
   } catch (error) {
     return errorHandler(error);

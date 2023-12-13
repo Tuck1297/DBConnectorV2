@@ -3,7 +3,6 @@ import { db } from "@/server/api/db";
 import z from "zod";
 import * as pg from "pg";
 
-
 export const dbCmdExecute = {
   testConnection,
   getTables,
@@ -17,17 +16,26 @@ export const dbCmdExecute = {
   addTable,
   addTableRow,
   addTableColumn,
+  executeCustomQueries,
 };
 
 async function testConnection(connectObj) {
   const connectSchema = z.object({
-    host: z.string({message: "Host is required and must be a string."}),
-    port: z.number({message:"Port is required and must be a number."}),
-    user_id: z.string({message:"User Id is required and must be a string."}),
-    password: z.string({message:"Password is required and must be a string."}),
-    confirm_password: z.string({message:"Confirm Password is required and must be a string."}),
-    database_type: z.string({message:"Database type is required and must be a string."}).max(20),
-    database_name: z.string({message:"Database name is required and must be a string."}),
+    host: z.string({ message: "Host is required and must be a string." }),
+    port: z.number({ message: "Port is required and must be a number." }),
+    user_id: z.string({ message: "User Id is required and must be a string." }),
+    password: z.string({
+      message: "Password is required and must be a string.",
+    }),
+    confirm_password: z.string({
+      message: "Confirm Password is required and must be a string.",
+    }),
+    database_type: z
+      .string({ message: "Database type is required and must be a string." })
+      .max(20),
+    database_name: z.string({
+      message: "Database name is required and must be a string.",
+    }),
   });
 
   // Parse and validate the connection object
@@ -37,25 +45,82 @@ async function testConnection(connectObj) {
   const connectionString = `${connectObj.database_type}://${connectObj.user_id}:${connectObj.password}@${connectObj.host}:${connectObj.port}/${connectObj.database_name}`;
 
   // Create a new Sequelize instance with the connection string
-  const tempSequelize = new Sequelize(connectionString, {dialectModule: pg});
+  const tempSequelize = new Sequelize(connectionString, { dialectModule: pg });
 
   // Test the connection
   await tempSequelize.authenticate();
   return true;
-
 }
 async function getTables() {}
 async function getTableRows() {}
 async function getTableColumns() {}
-async function updateTableRow(rowUpdateObj) {}
+async function updateTableRow(newRowUpdateObj, oldRowUpdateObj, connectionObj) {
+  // TODO: add validation
+  // Construct the connection string
+  const connectionString = `${connectionObj.database_type}://${connectionObj.user_id}:${connectionObj.password}@${connectionObj.host}:${connectionObj.port}/${connectionObj.database_name}`;
+
+  // Create a new Sequelize instance with the connection string
+  const tempSequelize = new Sequelize(connectionString, { dialectModule: pg });
+
+  // Build the update query
+  let updateQuery = `UPDATE ${connectionObj.current_table_interacting} SET `;
+
+  let whereConditions = "WHERE ";
+  let params = {
+    replacements: {},
+    type: Sequelize.QueryTypes.UPDATE,
+  };
+  Object.keys(newRowUpdateObj).forEach((key, index) => {
+    updateQuery += `${key} = :${key}, `;
+    whereConditions += `${key} = :${key}Cond AND `;
+    params.replacements[key] = newRowUpdateObj[key];
+    params.replacements[`${key}Cond`] = oldRowUpdateObj[key];
+  });
+  updateQuery = updateQuery.slice(0, -2);
+  whereConditions = whereConditions.slice(0, -5);
+  updateQuery += ` ${whereConditions}`;
+  console.log("updateQuery: ", updateQuery);
+  console.log("params: ", params);
+  // Execute the update query
+  // await tempSequelize.query(updateQuery, params); <-- TODO uncomment this later
+}
 async function updateTableCol(colUpdateObj) {}
 async function deleteTable(tableName) {}
-async function deleteTableRow(rowToDeleteObj) {}
+async function deleteTableRow(rowToDeleteObj, connectionObj) {
+  // TODO: add validation
+  // Construct the connection string
+  const connectionString = `${connectionObj.database_type}://${connectionObj.user_id}:${connectionObj.password}@${connectionObj.host}:${connectionObj.port}/${connectionObj.database_name}`;
+
+  // Create a new Sequelize instance with the connection string
+  const tempSequelize = new Sequelize(connectionString, { dialectModule: pg });
+
+  // Build the delete query
+  let deleteQuery = `DELETE FROM ${connectionObj.current_table_interacting} WHERE `;
+  let params = {
+    replacements: {},
+    type: Sequelize.QueryTypes.DELETE,
+  };
+  Object.keys(rowToDeleteObj).forEach((key, index) => {
+    deleteQuery += `${key} = :${key} AND `;
+    params.replacements[key] = rowToDeleteObj[key];
+  });
+  deleteQuery = deleteQuery.slice(0, -5);
+  console.log("deleteQuery: ", deleteQuery);
+  console.log("params: ", params);
+  // Execute the delete query
+  // await tempSequelize.query(deleteQuery, params); <-- TODO uncomment this later
+}
 async function deleteTableColumn(colName) {}
 async function addTable(tableToAddObj) {}
 async function addTableRow(rowToAddObj) {}
 async function addTableColumn(ColToAddObj) {}
 
+async function executeCustomQueries(queryObj, connectionObj) {
+  // TODO: complete this function...
+  console.log("queryObj: ", queryObj);
+  console.log("connectionObj: ", connectionObj);
+  return true;
+}
 /**
  * Executes a database query with the given query and parameters.
  * @param {string} query - The SQL query to execute.

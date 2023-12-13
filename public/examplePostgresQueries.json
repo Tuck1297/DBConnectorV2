@@ -1,7 +1,8 @@
 {
   "SELECT": {
     "exampleQueries": [
-      "SELECT column1, column2 FROM table_name WHERE conditions"
+      "SELECT column1, column2 FROM table_name WHERE conditions",
+      "SELECT * FROM table_name WHERE name = \"John Doe\" AND age > 18"
     ],
     "desc": "Retrieve data from a table.",
     "desc2": "Conditions can include: =, !=, <, >, <=, >=, AND, OR, NOT, BETWEEN, LIKE, IN, IS NULL"
@@ -14,7 +15,8 @@
   },
   "UPDATE": {
     "exampleQueries": [
-      "UPDATE table_name SET column1 = value1 WHERE condition;"
+      "UPDATE table_name SET column1 = value1 WHERE condition;",
+      "UPDATE table_name SET column1 = value1, column2 = value2 WHERE condition;"
     ],
     "desc": "Modify existing records in a table.",
     "desc2": "Conditions can include: =, !=, <, >, <=, >=, AND, OR, NOT, BETWEEN, LIKE, IN, IS NULL"

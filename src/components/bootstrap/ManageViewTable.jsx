@@ -3,14 +3,153 @@ import CustomButton from "../interaction/inputs/CustomButton";
 import { useState } from "react";
 import { alertService } from "@/services/alertService";
 import { dbConnectService } from "@/services/dbConnectService";
+import { connectService } from "@/services/connectService";
 
-const ManageViewTable = ({ data, tableHeader, setModal, ...props }) => {
+const ManageViewTable = ({
+  data,
+  tableHeader,
+  setModal,
+  tableType,
+  ...props
+}) => {
   const [updateRow, setUpdateRow] = useState({});
   const [deleteRowState, setDeleteRowState] = useState(null);
   const [updateRowState, setUpdateRowState] = useState(null);
   const [updateLoading, setUpdateLoading] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const columns = Object.keys(data[0]);
+
+  function handleDelete(index, row) {
+    if (tableType === "manageDBConnections") {
+      handleDeleteDBConnection(index, row);
+    } else if (tableType === "manageDataRows") {
+      handleDeleteRow(index, row);
+    } else if (tableType === "manageTables") {
+      handleDeleteTable(index, row);
+    }
+  }
+
+  // TODO: implement removing actual row from actual table (in this case it would be the data property) -- HINT: need to pass down set function related to data
+  function handleDeleteDBConnection(index, row) {
+    setModal({
+      modalMsg: `Are you sure you want to delete this connection? Once submitted this action cannot be reversed.`,
+      modalBtnActionName: "Delete",
+      modalAction: async () => {
+        setDeleteRowState(index);
+        setDeleteLoading(true);
+        await connectService
+          .delete(row.id)
+          .then((res) => {
+            setDeleteLoading(false);
+            setDeleteRowState(null);
+            alertService.success("Delete Successful!");
+          })
+          .catch((err) => {
+            setDeleteLoading(false);
+            setDeleteRowState(null);
+            alertService.error("Delete Failed!");
+          });
+      },
+    });
+  }
+
+  function handleDeleteRow(index, row) {
+    setModal({
+      modalMsg: `Are you sure you want to delete this row? Once submitted this action cannot be reversed.`,
+      modalBtnActionName: "Delete",
+      modalAction: async () => {
+        setDeleteRowState(index);
+        setDeleteLoading(true);
+        await dbConnectService
+          .deleteTableRow(row)
+          .then((res) => {
+            setDeleteLoading(false);
+            setDeleteRowState(null);
+            alertService.success("Delete Successful!");
+          })
+          .catch((err) => {
+            setDeleteLoading(false);
+            setDeleteRowState(null);
+            alertService.error("Delete Failed!");
+          });
+      },
+    });
+  }
+
+  function handleDeleteTable(index, row) {
+    // TODO: implement table to use this function
+    setModal({
+      modalMsg: `Are you sure you want to delete this table? Once submitted this action cannot be reversed.`,
+      modalBtnActionName: "Delete",
+      modalAction: async () => {
+        setDeleteRowState(index);
+        setDeleteLoading(true);
+        await dbConnectService
+          .deleteTable(row.table_name)
+          .then((res) => {
+            setDeleteLoading(false);
+            setDeleteRowState(null);
+            alertService.success("Delete Successful!");
+          })
+          .catch((err) => {
+            setDeleteLoading(false);
+            setDeleteRowState(null);
+            alertService.error("Delete Failed!");
+          });
+      },
+    });
+  }
+
+  function handleUpdate(index, row) {
+    if (tableType === "manageDBConnections") {
+      handleUpdateDBConnection(index, row);
+    } else if (tableType === "manageDataRows") {
+      handleUpdateRow(index, row);
+    } else if (tableType === "manageTables") {
+      handleUpdateTable(index, row);
+    }
+  }
+
+  function handleUpdateDBConnection(index, row) {
+    setUpdateRowState(index);
+    setModal({
+      modalMsg: `Updating the connection string is not supported. If you want to make changes, delete this connection info and reenter the information into the connection form.`,
+      modalBtnActionName: "Close",
+      modalAction: async () => {
+        setUpdateRowState(null);
+      },
+    });
+  }
+
+  function handleUpdateRow(index, row) {
+    setUpdateRowState(index);
+    setModal({
+      modalMsg: `Are you sure you want to update this row? Once submitted this action cannot be reversed.`,
+      modalBtnActionName: "Update",
+      modalAction: async () => {
+        setUpdateLoading(true);
+        await dbConnectService
+          .updateTableRow(updateRow, row)
+          .then((res) => {
+            setUpdateLoading(false);
+            setUpdateRowState(null);
+            alertService.success("Update Successful!");
+          })
+          .catch((err) => {
+            setUpdateLoading(false);
+            setUpdateRowState(null);
+            alertService.error("Update Failed!");
+          });
+      },
+    });
+  }
+
+  function handleUpdateTable(index, row) {
+    setUpdateRowState(index);
+    alert(
+      "moving to updating table form where columns can be updated, deleted and added, and table name can be updated"
+    );
+  }
 
   return (
     <>
@@ -75,24 +214,7 @@ const ManageViewTable = ({ data, tableHeader, setModal, ...props }) => {
                     isLoading={deleteLoading && deleteRowState === rowIndex}
                     disabled={updateRowState !== null || deleteLoading}
                     onSubmit={() => {
-                      setModal({
-                        modalMsg: `Are you sure you want to delete this row? Once submitted this action cannot be reversed.`,
-                        modalBtnActionName: "Delete",
-                        modalAction: () => {
-                          setDeleteRowState(rowIndex);
-                          console.log("Delete: ", row.id);
-                          setDeleteLoading(true);
-                          setTimeout(() => {
-                            setDeleteLoading(false);
-                            setDeleteRowState(null);
-                            alertService.success("Delete Successful!");
-                          }, 5000);
-                          // call delete api endpoint
-                          // once successful remove from table
-                          // when loading set loading state of delete button clicked
-                          // AND disable all delete and update buttons
-                        },
-                      });
+                      handleDelete(rowIndex, row);
                     }}
                     data-bs-toggle="modal"
                     data-bs-target="#staticBackdrop"
@@ -108,26 +230,7 @@ const ManageViewTable = ({ data, tableHeader, setModal, ...props }) => {
                         disabled={updateLoading}
                         isLoading={updateLoading && updateRowState === rowIndex}
                         onSubmit={() => {
-                          setUpdateRowState(rowIndex);
-                          setModal({
-                            modalMsg: `Are you sure you want to update this row? Once submitted this action cannot be reversed.`,
-                            modalBtnActionName: "Update",
-                            modalAction: () => {
-                              console.log("Update: ", row.id);
-                              console.log("Update To: ", updateRow);
-                              // setUpdateRowState(null);
-                              setUpdateLoading(true);
-                              setTimeout(() => {
-                                setUpdateLoading(false);
-                                setUpdateRowState(null);
-                                alertService.success("Update Successful!");
-                              }, 5000);
-                              // call update api endpoint
-                              // once successful update table
-                              // when loading set loading state of update button clicked
-                              // AND disable all delete and update buttons
-                            },
-                          });
+                          handleUpdate(rowIndex, row);
                         }}
                         data-bs-toggle="modal"
                         data-bs-target="#staticBackdrop"
@@ -158,7 +261,7 @@ const ManageViewTable = ({ data, tableHeader, setModal, ...props }) => {
               </tr>
             ))}
           </tbody>
-        </table>{" "}
+        </table>
       </section>
     </>
   );
