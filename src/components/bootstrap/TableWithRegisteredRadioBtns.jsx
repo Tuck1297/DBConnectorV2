@@ -1,7 +1,17 @@
-const TableWithRegisteredRadioBtns = ({ tableData, tableHeader, register }) => {
+const TableWithRegisteredRadioBtns = ({
+  tableData,
+  tableHeader,
+  register,
+  errors,
+  registerName,
+}) => {
+  console.log(errors);
   return (
     <>
       <h3 className="fs-4 text-center w-100 mt-3">{tableHeader}</h3>
+      <div className="invalid-feedback">
+        {errors?.[registerName.replace(" ", "_").toLowerCase()]?.message}
+      </div>
       <section className="table-container">
         <table className="table">
           <thead>
@@ -18,16 +28,24 @@ const TableWithRegisteredRadioBtns = ({ tableData, tableHeader, register }) => {
             {tableData.map((row, index) => (
               <tr
                 key={index}
-                className={`${index % 2 === 0 ? "table-light" : "table-white"} text-center`}
+                className={`${
+                  index % 2 === 0 ? "table-light" : "table-white"
+                } text-center`}
               >
                 <td>
                   <div className="form-check">
                     <input
-                      {...register(`radioBtn`)}
+                      {...register(
+                        `${registerName.replaceAll(" ", "_").toLowerCase()}})}`
+                      )}
                       className="form-check-input"
                       type="radio"
-                      name={`radioBtn`}
-                      id={`radioBtn${index}`}
+                      name={`${registerName
+                        .replaceAll(" ", "_")
+                        .toLowerCase()}`}
+                      id={`${registerName
+                        .replaceAll(" ", "_")
+                        .toLowerCase()}${index}`}
                       value={row.id}
                     />
                   </div>

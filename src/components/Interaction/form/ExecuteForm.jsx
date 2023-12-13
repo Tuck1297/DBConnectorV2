@@ -2,7 +2,7 @@
 import TextArea from "../inputs/Textarea";
 import CustomButton from "../inputs/CustomButton";
 import { useState, useContext } from "react";
-import { ConnectionContext } from "@/components/context/ConnectionContext";
+import { QueryResultsContext } from "@/components/context/QueryResultsContext";
 import { alertService } from "@/services/alertService";
 import { useForm } from "react-hook-form";
 import { authSchema } from "@/hooks/yupAuth";
@@ -11,25 +11,35 @@ import { dbConnectService } from "@/services/dbConnectService";
 const ExecuteForm = ({ connections }) => {
   const [numTextAreas, setNumTextAreas] = useState(["queryToExecute"]);
   const [loading, setLoading] = useState(false);
-  const [schema, setSchema] = useState(authSchema({ queryToExecute: true }));
+  const [schema, setSchema] = useState(authSchema({ queryToExecute: true, dbConnectId: true }));
+  const { setRowData } = useContext(QueryResultsContext);
 
-  const { register, handleSubmit, formState, watch, reset, unregister } =
+  const { register, handleSubmit, formState, watch, reset, unregister, setError } =
     useForm(schema);
   const { errors } = formState;
 
+  //TODO: fix error not showing up for radio button validation
+
   async function onSubmit(data) {
-    await dbConnectService.executeCustomQueries(data)
+    setLoading(true);
+    await dbConnectService
+      .executeCustomQueries(data)
       .then((res) => {
         console.log(res);
+        alertService.success("Query Execution Successful!");
+        setRowData(res);
+        setLoading(false);
+        setTimeout(() => {
+          alertService.warning(
+            "Results from SELECT queries can be viewed under the view panel."
+          );
+        }, 3000);
       })
       .catch((err) => {
         console.error(err);
+        alertService.error(err);
+        setLoading(false);
       });
-    // console.log(data);
-    // setLoading(true);
-    // setTimeout(() => {
-    //   setLoading(false);
-    // }, 3000);
   }
 
   return (
@@ -104,6 +114,8 @@ const ExecuteForm = ({ connections }) => {
         <TableWithRegisteredRadioBtns
           tableData={connections}
           register={register}
+          registerName="dbConnectId"
+          errors={errors}
         />
       </form>
     </section>

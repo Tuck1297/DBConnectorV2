@@ -1,19 +1,19 @@
 "use client";
 import { useEffect, useState } from "react";
-import { ConnectionContext } from "./context/ConnectionContext";
+import { QueryResultsContext } from "./context/QueryResultsContext";
 
 // CSS
 import "../styles/globals.css";
 
 const ImportsComponent = ({ children }) => {
-  const [dbConnection, setDBConnection] = useState("");
+  const [rowData, setRowData] = useState([]);
   useEffect(() => {
     import("bootstrap/dist/js/bootstrap.bundle.min");
   }, []);
   return (
-    <ConnectionContext.Provider value={{ dbConnection, setDBConnection }}>
+    <QueryResultsContext.Provider value={{ rowData, setRowData }}>
       {children}
-    </ConnectionContext.Provider>
+    </QueryResultsContext.Provider>
   );
 };
 export default ImportsComponent;

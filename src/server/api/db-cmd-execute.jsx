@@ -119,7 +119,13 @@ async function executeCustomQueries(queryObj, connectionObj) {
   // TODO: complete this function...
   console.log("queryObj: ", queryObj);
   console.log("connectionObj: ", connectionObj);
-  return true;
+  return [
+    { id: 1, name: "test1", description: "test1 desc" },
+    { id: 2, name: "test2", description: "test2 desc" },
+    { id: 3, name: "test3", description: "test3 desc" },
+    { id: 4, name: "test4", description: "test4 desc" },
+    { id: 5, name: "test5", description: "test5 desc" },
+  ]
 }
 /**
  * Executes a database query with the given query and parameters.

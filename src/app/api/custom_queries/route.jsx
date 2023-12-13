@@ -14,20 +14,25 @@ export async function POST(request, context) {
     const session = await getServerSession(authOptions);
     await apiSetup(request, true, session);
     const queries = await request.json();
+    // get current user info
     const currUser = await db.User.findOne({
       where: {
         id: session.user.id,
       },
       raw: true,
     });
+    // extract current db interacting id
     const currDBInteracting = currUser.current_db_interacting;
+    // update current db interacting id for current user
     await dbConnectionManagement.updateUserCurrentInteracting(
       session.user.id,
-      queries.radioBtn
+      queries.dbconnectid
     );
+    // use db connection id to retrieve connection info
     const connectionInfo = await dbConnectionManagement.getConnection(
       currDBInteracting
     );
+    // execute custom queries
     const result = await dbCmdExecute.executeCustomQueries(
       queries,
       connectionInfo

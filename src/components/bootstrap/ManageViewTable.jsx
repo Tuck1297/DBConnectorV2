@@ -17,6 +17,13 @@ const ManageViewTable = ({
   const [updateRowState, setUpdateRowState] = useState(null);
   const [updateLoading, setUpdateLoading] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
+
+  if (data.length === 0) {
+    return (
+      <h3 className="fs-4 text-center w-100 mt-3">No Data Found or Retrieved...</h3>
+    );
+  }
+
   const columns = Object.keys(data[0]);
 
   function handleDelete(index, row) {
