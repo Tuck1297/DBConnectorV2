@@ -1,7 +1,8 @@
 import { Sequelize } from "sequelize";
 import { db } from "@/server/api/db";
 import z from "zod";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
+import { connect } from "rxjs";
 
 export const dbConnectionManagement = {
   create,
@@ -9,18 +10,26 @@ export const dbConnectionManagement = {
   update,
   getConnection,
   updateUserCurrentInteracting,
-  getAll
+  getAll,
 };
 
 async function create(connectObj, userId) {
   const connectSchema = z.object({
-    host: z.string({message: "Host is required and must be a string."}),
-    port: z.number({message:"Port is required and must be a number."}),
-    user_id: z.string({message:"User Id is required and must be a string."}),
-    password: z.string({message:"Password is required and must be a string."}),
-    confirm_password: z.string({message:"Confirm Password is required and must be a string."}),
-    database_type: z.string({message:"Database type is required and must be a string."}).max(20),
-    database_name: z.string({message:"Database name is required and must be a string."}),
+    host: z.string({ message: "Host is required and must be a string." }),
+    port: z.number({ message: "Port is required and must be a number." }),
+    user_id: z.string({ message: "User Id is required and must be a string." }),
+    password: z.string({
+      message: "Password is required and must be a string.",
+    }),
+    confirm_password: z.string({
+      message: "Confirm Password is required and must be a string.",
+    }),
+    database_type: z
+      .string({ message: "Database type is required and must be a string." })
+      .max(20),
+    database_name: z.string({
+      message: "Database name is required and must be a string.",
+    }),
   });
   const userIdSchema = z.string().uuid({ message: "Invalid ID" });
 
@@ -50,17 +59,21 @@ async function create(connectObj, userId) {
 
   connectObj.owner_id = userId;
 
-  connectObj.database_type = connectObj.dropdown;
-
-  connectObj.database_name = connectObj.database_name;
-
   // Create a new Sequelize object and save to database
   const connectionObj = new db.ConnectingInfo(connectObj);
   await connectionObj.save();
 
   // Update the user's current interacting db
   await updateUserCurrentInteracting(userId, id);
+  const toReturn = {
+    id: connectObj.id,
+    host: connectObj.host,
+    database_name: connectObj.database_name,
+    database_type: connectObj.database_type,
+  };
+  return toReturn;
 }
+
 async function _delete(id) {
   const connectSchema = z.string().uuid({ message: "Invalid ID" });
   connectSchema.parse(id);
@@ -69,13 +82,21 @@ async function _delete(id) {
 }
 async function update(connectObj) {
   const connectSchema = z.object({
-    host: z.string({message: "Host is required and must be a string."}),
-    port: z.number({message:"Port is required and must be a number."}),
-    user_id: z.string({message:"User Id is required and must be a string."}),
-    password: z.string({message:"Password is required and must be a string."}),
-    confirm_password: z.string({message:"Confirm Password is required and must be a string."}),
-    database_type: z.string({message:"Database type is required and must be a string."}).max(20),
-    database_name: z.string({message:"Database name is required and must be a string."}),
+    host: z.string({ message: "Host is required and must be a string." }),
+    port: z.number({ message: "Port is required and must be a number." }),
+    user_id: z.string({ message: "User Id is required and must be a string." }),
+    password: z.string({
+      message: "Password is required and must be a string.",
+    }),
+    confirm_password: z.string({
+      message: "Confirm Password is required and must be a string.",
+    }),
+    database_type: z
+      .string({ message: "Database type is required and must be a string." })
+      .max(20),
+    database_name: z.string({
+      message: "Database name is required and must be a string.",
+    }),
   });
 
   // Parse and validate the connection object
@@ -117,7 +138,7 @@ async function getAll(userId) {
         "password",
         "port",
         "schema",
-        "current_table_interacting"
+        "current_table_interacting",
       ],
     },
   });

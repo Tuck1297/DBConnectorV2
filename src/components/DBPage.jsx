@@ -11,13 +11,14 @@ import MongodbPanel from "@/components/panels/Mongodb";
 import { useState } from "react";
 const DBPage = ({connections}) => {
   const [panel, setPanel] = useState("home");
+  const [connectionsState, setConnectionsState] = useState(connections);
   return (
     <Sidebar setPanel={setPanel}>
       {panel === "home" && <HomePanel />}
       {panel === "view" && <ViewPanel />}
-      {panel === "execute" && <ExecutePanel connections={connections} />}
+      {panel === "execute" && <ExecutePanel connections={connectionsState} />}
       {panel === "build" && <BuildPanel />}
-      {panel === "connection" && <ConnectionPanel setPanel={setPanel} connections={connections}/>}
+      {panel === "connection" && <ConnectionPanel setPanel={setPanel} connections={connectionsState} setConnectionsState={setConnectionsState}/>}
       {panel === "postgres" && <PostgresPanel />}
       {panel === "sql" && <SqlPanel />}
       {panel === "mongodb" && <MongodbPanel />}

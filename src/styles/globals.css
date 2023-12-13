@@ -18,7 +18,7 @@ body {
   height: 100vh;
 }
 
-.pushable {
+/* .pushable {
   position: relative;
   background: transparent;
   padding: 0px;
@@ -103,13 +103,13 @@ body {
 
 .pushable:focus:not(:focus-visible) {
   outline: none;
-}
+} */
 
 .border-none {
   border: none;
 }
 
-span.custom-tooltip {
+/* span.custom-tooltip {
   position: absolute;
   top: 2px;
   width: fit-content;
@@ -136,4 +136,13 @@ span.custom-tooltip:after {
   border-color: transparent #ffffff transparent transparent;
   top: 2px;
   left: -24px;
+} */
+
+.table-container {
+  /* max-width: 100%; */
+  overflow-x: auto;
+}
+
+.table {
+  border-collapse: collapse;
 }

@@ -9,7 +9,7 @@ The initial tech stack for this application will focus on React.js and Next.js. 
 ### Initial Scope of the project
 
 - [ ] Create a page that handles Executing database queries that have been previously saved and used
-- [ ] Create a page that allows one to easily visualize data 25 rows at a time, organize the rows based by certain columns and be able to update or delete a particular row in the database.
+- [X] Create a page that allows one to easily visualize queried data from execute panel
 - [ ] Select and delete multiple rows in a database
 - [ ] delete a table in a database
 - [ ] delete a database itself
@@ -20,7 +20,15 @@ The initial tech stack for this application will focus on React.js and Next.js. 
 - [ ] upsert information to a database if it is allowed
 - [ ] access every table and be able to insert any kind of value into a database (alot to consider in this one (start with common and integrate new values as they appear))
 - [ ] allow options to save commonly used and accessed queries for later use in a database
+- [ ] when page is refreshed panel currently in on database page will remain open (currently refresh to home page)
 
 #### when integrate into the cloud -- if I ever get this far
-- [ ] be able to sign in as a particular user
-- [ ] integrate google auth with next-auth library
+- [X] be able to sign in as a particular user
+- [X] integrate google auth with next-auth library
+
+### NOTES
+1. Review page overextending error ~ table is causing style issue
+2. only allow one select query to exeucte at a time on the execute panel - when done automatically switch to view panel to see the queried data but also retain the query
+that retrieved that data in the execute panel text area where the query was written
+3. have a form on the data view page that will allow easy addition of a row
+4. in postgres docs maybe have them be related to a page in notion account - when page is updated in the application it is updated on the notion page??? - believe there is a notion api that I can integrate...

@@ -29,10 +29,10 @@ export async function POST(request, context) {
         { status: 400 }
       );
     }
-    await dbConnectionManagement.create(connectObj, session.user.id);
+    const newConnection = await dbConnectionManagement.create(connectObj, session.user.id);
 
     return NextResponse.json(
-      { message: "Connection created successfully" },
+      newConnection,
       { status: 200 }
     );
   } catch (error) {

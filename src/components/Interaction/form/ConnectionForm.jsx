@@ -13,7 +13,7 @@ import { set, useForm } from "react-hook-form";
 import { dbConnectService } from "@/services/dbConnectService";
 import { connectService } from "@/services/connectService";
 import LargeSpinner from "@/components/loading/LargeSpinner";
-const ConnectionForm = ({ setPanel }) => {
+const ConnectionForm = ({ setPanel, setConnectionsState }) => {
   const [successfulSaveConnection, setSuccessfulSaveConnection] =
     useState(false);
   const [loadingMsg, setLoadingMsg] = useState(null);
@@ -38,8 +38,8 @@ const ConnectionForm = ({ setPanel }) => {
     setLoadingMsg("Testing Connection Information");
     // remove dropdown and update to database_type
     data.database_type = data.dropdown;
-    const {dropdown, ...updatedData} = data;
-    console.log(updatedData)
+    const { dropdown, ...updatedData } = data;
+    console.log(updatedData);
     dbConnectService
       .testConnection(updatedData)
       .then((res) => {
@@ -51,7 +51,7 @@ const ConnectionForm = ({ setPanel }) => {
         setSuccessfulSaveConnection(true);
         alertService.success("Connection Information Saved");
         setLoadingMsg(null);
-        // setPanel("view");
+        setConnectionsState((prevState) => [...prevState, res]);
       })
       .catch((err) => {
         // console.log(err)
@@ -68,7 +68,7 @@ const ConnectionForm = ({ setPanel }) => {
   }
 
   return (
-    <Card header="DB Connection Information" className="border-none">
+    <Card header="Add a new DB Connection" className="border-none">
       <form onSubmit={handleSubmit(onSubmit)}>
         <Row className="g-1">
           <Col>
