@@ -5,6 +5,10 @@ const TableWithRegisteredRadioBtns = ({
   errors,
   registerName,
 }) => {
+  if (tableData.length === 0){
+    return <h3 className="fs-4 text-center w-100 mt-3">No Information Available...</h3>
+  }
+  const columns = Object.keys(tableData[0]);
   return (
     <>
       <h3 className="fs-4 text-center w-100 mt-3">{tableHeader}</h3>
@@ -13,7 +17,7 @@ const TableWithRegisteredRadioBtns = ({
           <thead>
             <tr className="text-center">
               <th scope="col">To Select</th>
-              {Object.keys(tableData[0]).map((key, index) => (
+              {columns.map((key, index) => (
                 <th scope="col" key={index}>
                   {key.toLocaleUpperCase()}
                 </th>

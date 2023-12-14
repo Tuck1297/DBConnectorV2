@@ -2,6 +2,8 @@ import { Sequelize } from "sequelize";
 import { db } from "@/server/api/db";
 import z from "zod";
 import * as pg from "pg";
+import { queryFilter } from "@/hooks/queryFilter";
+import { dbConnectionManagement } from "./db-connection-management";
 
 export const dbCmdExecute = {
   testConnection,
@@ -41,11 +43,8 @@ async function testConnection(connectObj) {
   // Parse and validate the connection object
   connectSchema.parse(connectObj);
 
-  // Construct the connection string
-  const connectionString = `${connectObj.database_type}://${connectObj.user_id}:${connectObj.password}@${connectObj.host}:${connectObj.port}/${connectObj.database_name}`;
-
   // Create a new Sequelize instance with the connection string
-  const tempSequelize = new Sequelize(connectionString, { dialectModule: pg });
+  const tempSequelize = createDbConnectionPoint(connectObj);
 
   // Test the connection
   await tempSequelize.authenticate();
@@ -56,11 +55,8 @@ async function getTableRows() {}
 async function getTableColumns() {}
 async function updateTableRow(newRowUpdateObj, oldRowUpdateObj, connectionObj) {
   // TODO: add validation
-  // Construct the connection string
-  const connectionString = `${connectionObj.database_type}://${connectionObj.user_id}:${connectionObj.password}@${connectionObj.host}:${connectionObj.port}/${connectionObj.database_name}`;
-
   // Create a new Sequelize instance with the connection string
-  const tempSequelize = new Sequelize(connectionString, { dialectModule: pg });
+  const tempSequelize = createDbConnectionPoint(connectionObj);
 
   // Build the update query
   let updateQuery = `UPDATE ${connectionObj.current_table_interacting} SET `;
@@ -82,17 +78,14 @@ async function updateTableRow(newRowUpdateObj, oldRowUpdateObj, connectionObj) {
   console.log("updateQuery: ", updateQuery);
   console.log("params: ", params);
   // Execute the update query
-  // await tempSequelize.query(updateQuery, params); <-- TODO uncomment this later
+  await tempSequelize.query(updateQuery, params);
 }
 async function updateTableCol(colUpdateObj) {}
 async function deleteTable(tableName) {}
 async function deleteTableRow(rowToDeleteObj, connectionObj) {
   // TODO: add validation
-  // Construct the connection string
-  const connectionString = `${connectionObj.database_type}://${connectionObj.user_id}:${connectionObj.password}@${connectionObj.host}:${connectionObj.port}/${connectionObj.database_name}`;
-
   // Create a new Sequelize instance with the connection string
-  const tempSequelize = new Sequelize(connectionString, { dialectModule: pg });
+  const tempSequelize = createDbConnectionPoint(connectionObj);
 
   // Build the delete query
   let deleteQuery = `DELETE FROM ${connectionObj.current_table_interacting} WHERE `;
@@ -105,10 +98,10 @@ async function deleteTableRow(rowToDeleteObj, connectionObj) {
     params.replacements[key] = rowToDeleteObj[key];
   });
   deleteQuery = deleteQuery.slice(0, -5);
-  console.log("deleteQuery: ", deleteQuery);
-  console.log("params: ", params);
+  // console.log("deleteQuery: ", deleteQuery);
+  // console.log("params: ", params);
   // Execute the delete query
-  // await tempSequelize.query(deleteQuery, params); <-- TODO uncomment this later
+  await tempSequelize.query(deleteQuery, params);
 }
 async function deleteTableColumn(colName) {}
 async function addTable(tableToAddObj) {}
@@ -116,16 +109,61 @@ async function addTableRow(rowToAddObj) {}
 async function addTableColumn(ColToAddObj) {}
 
 async function executeCustomQueries(queryObj, connectionObj) {
-  // TODO: complete this function...
-  console.log("queryObj: ", queryObj);
-  console.log("connectionObj: ", connectionObj);
-  return [
-    { id: 1, name: "test1", description: "test1 desc" },
-    { id: 2, name: "test2", description: "test2 desc" },
-    { id: 3, name: "test3", description: "test3 desc" },
-    { id: 4, name: "test4", description: "test4 desc" },
-    { id: 5, name: "test5", description: "test5 desc" },
-  ]
+  // create connection
+  const tempSequelize = createDbConnectionPoint(connectionObj);
+  // extract all queries
+  const { dbconnectid, ...queries } = queryObj;
+  // ensure queries are valid
+  const queryFilterResult = queryFilter(queries);
+  if (queryFilterResult) {
+    throw queryFilterResult;
+  }
+  let selectQuery = '';
+
+  // execute queries
+  const promises = [];
+  Object.keys(queries).forEach((key) => {
+    const query = queries[key];
+    if (query.toLowerCase().includes("select")) {
+      promises.push(
+        tempSequelize.query(query, { type: Sequelize.QueryTypes.SELECT })
+      );
+      selectQuery = query;
+    } else {
+      promises.push(tempSequelize.query(query));
+    }
+  });
+  const results = await Promise.all(promises);
+
+  // format results
+  const resultsArray = [];
+  results.forEach((result) => {
+    if (
+      typeof result[1] === "object" &&
+      result[1].rowCount &&
+      result[1].command
+    ) {
+      // console.log("query result information")
+      resultsArray.push(
+        `${result[1].rowCount} rows affected. ${result[1].command} command executed successfully.`
+      );
+    } else {
+      // console.log("query result data")
+      resultsArray.push(result);
+       // Update current table interacting when a select query is executed
+       const tableNameIndex = selectQuery.toUpperCase().split(" ").indexOf("FROM") + 1;
+
+       const tableName = selectQuery.split(" ")[tableNameIndex];
+ 
+       // Update the user's current interacting db
+       dbConnectionManagement.updateTableCurrentInteracting(
+         connectionObj.id,
+         tableName
+       );
+    }
+  });
+
+  return resultsArray;
 }
 /**
  * Executes a database query with the given query and parameters.
@@ -140,4 +178,11 @@ async function executeCustomQueries(queryObj, connectionObj) {
 async function executeQuery(query, params) {
   const results = await db.sequelize.query(query, params);
   return results;
+}
+
+function createDbConnectionPoint(connectObj) {
+  return new Sequelize(
+    `${connectObj.database_type}://${connectObj.user_id}:${connectObj.password}@${connectObj.host}:${connectObj.port}/${connectObj.database_name}`,
+    { dialectModule: pg }
+  );
 }

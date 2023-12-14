@@ -15,6 +15,7 @@ const ConnectionView = ({
       />
       <ManageViewTable
         data={connections}
+        setData={setConnectionsState}
         tableHeader="Manage Connections"
         setModal={setModal}
         tableType="manageDBConnections"

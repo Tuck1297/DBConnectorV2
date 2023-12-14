@@ -5,13 +5,7 @@ import { alertService } from "@/services/alertService";
 import { dbConnectService } from "@/services/dbConnectService";
 import { connectService } from "@/services/connectService";
 
-const ManageViewTable = ({
-  data,
-  tableHeader,
-  setModal,
-  tableType,
-  ...props
-}) => {
+const ManageViewTable = ({ data, setData, tableHeader, setModal, tableType, ...props }) => {
   const [updateRow, setUpdateRow] = useState({});
   const [deleteRowState, setDeleteRowState] = useState(null);
   const [updateRowState, setUpdateRowState] = useState(null);
@@ -20,11 +14,25 @@ const ManageViewTable = ({
 
   if (data.length === 0) {
     return (
-      <h3 className="fs-4 text-center w-100 mt-3">No Data Found or Retrieved...</h3>
+      <h3 className="fs-4 text-center w-100 mt-3">
+        No Data Found or Retrieved...
+      </h3>
     );
   }
 
   const columns = Object.keys(data[0]);
+
+  function removeRow(index) {
+    const newData = [...data];
+    newData.splice(index, 1);
+    setData(newData);
+  }
+
+  function updateTableRow(index, row) {
+    const newData = [...data];
+    newData[index] = row;
+    setData(newData);
+  }
 
   function handleDelete(index, row) {
     if (tableType === "manageDBConnections") {
@@ -50,6 +58,7 @@ const ManageViewTable = ({
             setDeleteLoading(false);
             setDeleteRowState(null);
             alertService.success("Delete Successful!");
+            removeRow(index);
           })
           .catch((err) => {
             setDeleteLoading(false);
@@ -73,6 +82,7 @@ const ManageViewTable = ({
             setDeleteLoading(false);
             setDeleteRowState(null);
             alertService.success("Delete Successful!");
+            removeRow(index);
           })
           .catch((err) => {
             setDeleteLoading(false);
@@ -97,6 +107,7 @@ const ManageViewTable = ({
             setDeleteLoading(false);
             setDeleteRowState(null);
             alertService.success("Delete Successful!");
+            removeRow(index);
           })
           .catch((err) => {
             setDeleteLoading(false);
@@ -141,6 +152,7 @@ const ManageViewTable = ({
             setUpdateLoading(false);
             setUpdateRowState(null);
             alertService.success("Update Successful!");
+            updateTableRow(index, updateRow);
           })
           .catch((err) => {
             setUpdateLoading(false);

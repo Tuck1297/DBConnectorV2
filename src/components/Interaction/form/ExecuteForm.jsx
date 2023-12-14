@@ -39,15 +39,19 @@ const ExecuteForm = ({ connections }) => {
     await dbConnectService
       .executeCustomQueries(data)
       .then((res) => {
-        console.log(res);
-        alertService.success("Query Execution Successful!");
-        setRowData(res);
+        const messageStack = [];
+        res.forEach((result) => {
+          if (Array.isArray(result)) {
+            setRowData(result);
+            messageStack.push(`${result.length} rows returned. Data can be viewed on the view panel.`)
+          } else {
+            messageStack.push(result);
+          }
+        });
+        if (messageStack.length > 0) {
+          alertService.success(messageStack.join(" ~ "));
+        }
         setLoading(false);
-        setTimeout(() => {
-          alertService.warning(
-            "Results from SELECT queries can be viewed under the view panel."
-          );
-        }, 3000);
       })
       .catch((err) => {
         console.error(err);
