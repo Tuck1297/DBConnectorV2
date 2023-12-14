@@ -11,16 +11,25 @@ import { dbConnectService } from "@/services/dbConnectService";
 const ExecuteForm = ({ connections }) => {
   const [numTextAreas, setNumTextAreas] = useState(["queryToExecute"]);
   const [loading, setLoading] = useState(false);
-  const [schema, setSchema] = useState(authSchema({ queryToExecute: true, dbConnectId: true }));
+  const [schema, setSchema] = useState(
+    authSchema({ queryToExecute: true, dbconnectid: true })
+  );
   const { setRowData } = useContext(QueryResultsContext);
 
-  const { register, handleSubmit, formState, watch, reset, unregister, setError } =
-    useForm(schema);
+  const {
+    register,
+    handleSubmit,
+    formState,
+    watch,
+    reset,
+    unregister,
+    setError,
+  } = useForm(schema);
   const { errors } = formState;
 
-  //TODO: fix error not showing up for radio button validation
-
   async function onSubmit(data) {
+    // TODO: create hook for validating that data only has at most one select query
+    // and that the rest are not select queries
     setLoading(true);
     await dbConnectService
       .executeCustomQueries(data)
@@ -58,6 +67,13 @@ const ExecuteForm = ({ connections }) => {
             </span>
           );
         })}
+        <TableWithRegisteredRadioBtns
+          tableData={connections}
+          register={register}
+          registerName="dbConnectId"
+          errors={errors}
+          tableHeader="Select Database Connection"
+        />
         <CustomButton
           onSubmit={() => {
             const newTextAreaName = `queryToExecute${numTextAreas.length + 1}`;
@@ -110,12 +126,6 @@ const ExecuteForm = ({ connections }) => {
           }}
           actionWord="Reset"
           disabled={loading}
-        />
-        <TableWithRegisteredRadioBtns
-          tableData={connections}
-          register={register}
-          registerName="dbConnectId"
-          errors={errors}
         />
       </form>
     </section>

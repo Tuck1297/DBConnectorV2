@@ -5,13 +5,9 @@ const TableWithRegisteredRadioBtns = ({
   errors,
   registerName,
 }) => {
-  console.log(errors);
   return (
     <>
       <h3 className="fs-4 text-center w-100 mt-3">{tableHeader}</h3>
-      <div className="invalid-feedback">
-        {errors?.[registerName.replace(" ", "_").toLowerCase()]?.message}
-      </div>
       <section className="table-container">
         <table className="table">
           <thead>
@@ -36,7 +32,7 @@ const TableWithRegisteredRadioBtns = ({
                   <div className="form-check">
                     <input
                       {...register(
-                        `${registerName.replaceAll(" ", "_").toLowerCase()}})}`
+                        `${registerName.replaceAll(" ", "_").toLowerCase()}`
                       )}
                       className="form-check-input"
                       type="radio"
@@ -58,6 +54,9 @@ const TableWithRegisteredRadioBtns = ({
           </tbody>
         </table>
       </section>
+      <div className="text-danger">
+        {errors?.[registerName.replace(" ", "_").toLowerCase()]?.message}
+      </div>
     </>
   );
 };
