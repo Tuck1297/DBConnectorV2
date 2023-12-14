@@ -118,7 +118,7 @@ async function executeCustomQueries(queryObj, connectionObj) {
   if (queryFilterResult) {
     throw queryFilterResult;
   }
-  let selectQuery = '';
+  let selectQuery = "";
 
   // execute queries
   const promises = [];
@@ -150,16 +150,17 @@ async function executeCustomQueries(queryObj, connectionObj) {
     } else {
       // console.log("query result data")
       resultsArray.push(result);
-       // Update current table interacting when a select query is executed
-       const tableNameIndex = selectQuery.toUpperCase().split(" ").indexOf("FROM") + 1;
+      // Update current table interacting when a select query is executed
+      const tableNameIndex =
+        selectQuery.toUpperCase().split(" ").indexOf("FROM") + 1;
 
-       const tableName = selectQuery.split(" ")[tableNameIndex];
- 
-       // Update the user's current interacting db
-       dbConnectionManagement.updateTableCurrentInteracting(
-         connectionObj.id,
-         tableName
-       );
+      const tableName = selectQuery.split(" ")[tableNameIndex];
+
+      // Update the user's current interacting db
+      dbConnectionManagement.updateTableCurrentInteracting(
+        connectionObj.id,
+        tableName
+      );
     }
   });
 
@@ -183,6 +184,13 @@ async function executeQuery(query, params) {
 function createDbConnectionPoint(connectObj) {
   return new Sequelize(
     `${connectObj.database_type}://${connectObj.user_id}:${connectObj.password}@${connectObj.host}:${connectObj.port}/${connectObj.database_name}`,
-    { dialectModule: pg }
+    {
+      dialectModule: pg,
+      dialectOptions: {
+        ssl: {
+          rejectUnauthorized: false,
+        },
+      },
+    }
   );
 }

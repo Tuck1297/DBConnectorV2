@@ -58,7 +58,7 @@ const Sidebar = ({ children, setPanel }) => {
               </ul>
             </div>
           </Col>
-          <div className="col py-3">{children}</div>
+          <div className="col py-3" style={{maxWidth: "80%"}}>{children}</div>
         </Row>
       </div>
     </>
