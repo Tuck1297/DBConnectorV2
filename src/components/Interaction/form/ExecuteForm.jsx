@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { authSchema } from "@/hooks/yupAuth";
 import TableWithRegisteredRadioBtns from "@/components/bootstrap/TableWithRegisteredRadioBtns";
 import { dbConnectService } from "@/services/dbConnectService";
+import { queryFilter } from "@/hooks/queryFilter";
 const ExecuteForm = ({ connections }) => {
   const [numTextAreas, setNumTextAreas] = useState(["queryToExecute"]);
   const [loading, setLoading] = useState(false);
@@ -28,8 +29,12 @@ const ExecuteForm = ({ connections }) => {
   const { errors } = formState;
 
   async function onSubmit(data) {
-    // TODO: create hook for validating that data only has at most one select query
-    // and that the rest are not select queries
+    // Ensure somewhat valid queries are being sent from frontend (at least starting valid syntax)
+    let result = queryFilter(data);
+    if (result !== null) {
+      alertService.error(result);
+      return;
+    }
     setLoading(true);
     await dbConnectService
       .executeCustomQueries(data)
