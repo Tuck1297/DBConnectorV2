@@ -50,7 +50,20 @@ async function testConnection(connectObj) {
   await tempSequelize.authenticate();
   return true;
 }
-async function getTables() {}
+async function getTables(connectionObj, userid) {
+  // Create a new Sequelize instance with the connection string
+  const tempSequelize = createDbConnectionPoint(connectionObj);
+
+  // Get the tables
+  const tables = await tempSequelize.query(
+    "SELECT * FROM information_schema.tables WHERE table_schema = 'public'",
+    { type: Sequelize.QueryTypes.SELECT }
+  );
+
+  // Update the user's current interacting db
+  dbConnectionManagement.updateUserCurrentInteracting(userid, connectionObj.id);
+  return tables;
+}
 async function getTableRows() {}
 async function getTableColumns() {}
 async function updateTableRow(newRowUpdateObj, oldRowUpdateObj, connectionObj) {

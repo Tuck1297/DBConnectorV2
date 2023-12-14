@@ -8,6 +8,7 @@ import possiblePostgresAggregates from "../../../public/postgresAggregates.json"
 import { useState, useContext } from "react";
 import Table from "../bootstrap/Table";
 import { QueryBuilderContext } from "../context/QueryBuilderContext";
+import TablesViewByDB from "../bootstrap/TablesViewByDB";
 
 const BuildView = () => {
   const [exampleQueryData, setExampleQueryData] = useState(
@@ -63,6 +64,7 @@ const BuildView = () => {
           ) : (
             <></>
           )}
+          <TablesViewByDB/>
           <Table
             tableData={possiblePostgresDatatypes}
             tableHeader="Table DataTypes"
