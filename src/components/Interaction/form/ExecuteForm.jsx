@@ -9,13 +9,16 @@ import { authSchema } from "@/hooks/yupAuth";
 import TableWithRegisteredRadioBtns from "@/components/bootstrap/TableWithRegisteredRadioBtns";
 import { dbConnectService } from "@/services/dbConnectService";
 import { queryFilter } from "@/hooks/queryFilter";
+import { QueryExecuteContext } from "@/components/context/QueryExecuteContext";
 const ExecuteForm = ({ connections }) => {
-  const [numTextAreas, setNumTextAreas] = useState(["queryToExecute"]);
+    const { setRowData } = useContext(QueryResultsContext);
+  const { executeData, setExecuteData } = useContext(QueryExecuteContext);
+  const [numTextAreas, setNumTextAreas] = useState(Object.keys(executeData));
   const [loading, setLoading] = useState(false);
   const [schema, setSchema] = useState(
     authSchema({ queryToExecute: true, dbconnectid: true })
   );
-  const { setRowData } = useContext(QueryResultsContext);
+
 
   const {
     register,
@@ -43,7 +46,9 @@ const ExecuteForm = ({ connections }) => {
         res.forEach((result) => {
           if (Array.isArray(result)) {
             setRowData(result);
-            messageStack.push(`${result.length} rows returned. Data can be viewed on the view panel.`)
+            messageStack.push(
+              `${result.length} rows returned. Data can be viewed on the view panel.`
+            );
           } else {
             messageStack.push(result);
           }
@@ -62,7 +67,7 @@ const ExecuteForm = ({ connections }) => {
 
   return (
     <section className="p-2">
-      <p>NOTE: One query per textarea.</p>
+      <p>NOTE: One query per textarea. Tables get wrapped with double quotes and data values and parts of conditions get wrapped in single quotes.</p>
       <form onSubmit={handleSubmit(onSubmit)}>
         {numTextAreas.map((textAreaName, index) => {
           return (
@@ -72,6 +77,13 @@ const ExecuteForm = ({ connections }) => {
                 errors={errors}
                 className="mb-2"
                 label={textAreaName}
+                value={executeData[textAreaName.toLowerCase().replaceAll(" ", "_")]}
+                onChange={(e) => {
+                  setExecuteData({
+                    ...executeData,
+                    [textAreaName.toLowerCase().replaceAll(" ", "_")]: e.target.value
+                  })
+                }}
               />
             </span>
           );

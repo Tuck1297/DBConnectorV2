@@ -1,14 +1,17 @@
 const TextArea = ({
-    placeholder = "SELECT * FROM table_name;",
+  placeholder = "SELECT * FROM table_name;",
   className = "",
   disabled = false,
   register = () => {},
   label = "",
   errors = {},
+  onChange = () => {},
+  value = undefined
 }) => {
   return (
     <>
       <textarea
+      value={value}
         className={`form-control ${className} ${
           errors?.[label.replace(" ", "_").toLowerCase()] ? "is-invalid" : ""
         }`}
@@ -18,6 +21,7 @@ const TextArea = ({
         {...register(label.replace(" ", "_").toLowerCase())}
         style={{ height: "200px" }}
         placeholder={placeholder}
+        onChange={onChange}
       ></textarea>
       <div className="invalid-feedback">
         {errors?.[label.replace(" ", "_").toLowerCase()]?.message}

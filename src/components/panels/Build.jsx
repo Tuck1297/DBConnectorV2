@@ -5,8 +5,10 @@ import EventDropdown from "../interaction/inputs/EventDropdown";
 import possiblePostgresQueries from "../../../public/examplePostgresQueries.json";
 import possiblePostgresDatatypes from "../../../public/postgresTableDatatypes.json";
 import possiblePostgresAggregates from "../../../public/postgresAggregates.json";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Table from "../bootstrap/Table";
+import { QueryBuilderContext } from "../context/QueryBuilderContext";
+
 const BuildView = () => {
   const [exampleQueryData, setExampleQueryData] = useState(
     possiblePostgresQueries["SELECT"]
@@ -14,6 +16,7 @@ const BuildView = () => {
   const [query, setQuery] = useState(
     exampleQueryData.exampleQueries.join("\n \n")
   );
+  const { builderData, setBuilderData } = useContext(QueryBuilderContext);
   return (
     <div>
       <Page>
@@ -31,7 +34,12 @@ const BuildView = () => {
             }}
           />
           <TextArea placeholder={query} disabled={true} />
-          <TextArea className="mt-3" placeholder="Create your Query Here..." />
+          <TextArea
+            className="mt-3"
+            placeholder="Create your Query Here..."
+            onChange={(e) => setBuilderData(e.target.value)}
+            value={builderData}
+          />
           <h2 className="fs-4 text-center w-100 mt-3">
             Additional Query Information
           </h2>
