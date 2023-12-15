@@ -1,4 +1,9 @@
 const Table = ({ tableData, tableHeader }) => {
+  if (tableData.length === 0) {
+    return (
+      <h3 className="fs-4 text-center w-100 mt-3">No Information Available...</h3>
+    );
+  }
   return (
     <>
       <h3 className="fs-4 text-center w-100 mt-3">{tableHeader}</h3>

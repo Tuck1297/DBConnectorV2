@@ -9,10 +9,10 @@ import PostgresPanel from "@/components/panels/Postgres";
 import SqlPanel from "@/components/panels/Sql";
 import MongodbPanel from "@/components/panels/Mongodb";
 import Modal from "./bootstrap/Modal";
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
+import { ConnectionsContext } from "./context/ConnectionsContext";
 const DBPage = ({ connections }) => {
   const [panel, setPanel] = useState("home");
-  const [connectionsState, setConnectionsState] = useState(connections);
   const [modal, setModal] = useState({
     modalMsg: "Template Message",
     modalBtnActionName: "Submit",
@@ -20,6 +20,11 @@ const DBPage = ({ connections }) => {
       console.log("Modal Action");
     },
   });
+  const { connectionsData, setConnectionsData } = useContext(ConnectionsContext);
+
+  useEffect(() => {
+    setConnectionsData(connections);
+  }, [])
   return (
     <>
       <Modal
@@ -30,13 +35,11 @@ const DBPage = ({ connections }) => {
       <Sidebar setPanel={setPanel}>
         {panel === "home" && <HomePanel />}
         {panel === "view" && <ViewPanel setModal={setModal}/>}
-        {panel === "execute" && <ExecutePanel connections={connectionsState} />}
+        {panel === "execute" && <ExecutePanel/>}
         {panel === "build" && <BuildPanel />}
         {panel === "connection" && (
           <ConnectionPanel
             setPanel={setPanel}
-            connections={connectionsState}
-            setConnectionsState={setConnectionsState}
             setModal={setModal}
           />
         )}

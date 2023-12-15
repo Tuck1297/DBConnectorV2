@@ -44,7 +44,7 @@ async function initialize() {
 
   db.ConnectingInfo = ConnectionsModel(db.sequelize, DataTypes);
   db.User = UserModel(db.sequelize, DataTypes, models.User);
-  await db.sequelize.sync({ alter: true });
+  // await db.sequelize.sync({ alter: true });
   db.initialized = true;
 }
 

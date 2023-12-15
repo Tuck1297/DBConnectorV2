@@ -23,7 +23,7 @@ async function testConnection(connectionObj) {
  return await fetchWrapper.post(baseUrl + "/test/connection", connectionObj);
 }
 async function getTables(dbId) {
- return await fetchWrapper.get(baseUrl + `/tables/?dbId=${dbId}`);
+ return await fetchWrapper.get(baseUrl + `/tables/${dbId}`);
 }
 async function getTableRows() {
  return await fetchWrapper.get(baseUrl + "/table_rows");

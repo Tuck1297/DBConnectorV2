@@ -5,14 +5,16 @@ import CustomButton from "../inputs/CustomButton";
 import Dropdown from "../inputs/Dropdown";
 import Row from "@/components/bootstrap/Row";
 import Col from "@/components/bootstrap/Col";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { alertService } from "@/services/alertService";
 import { authSchema } from "@/hooks/yupAuth";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { dbConnectService } from "@/services/dbConnectService";
 import { connectService } from "@/services/connectService";
 import LargeSpinner from "@/components/loading/LargeSpinner";
-const ConnectionForm = ({ setPanel, setConnectionsState }) => {
+import { ConnectionsContext } from "@/components/context/ConnectionsContext";
+const ConnectionForm = ({ setPanel }) => {
+  const { connectionsData, setConnectionsData } = useContext(ConnectionsContext);
   const [successfulSaveConnection, setSuccessfulSaveConnection] =
     useState(false);
   const [loadingMsg, setLoadingMsg] = useState(null);
@@ -38,7 +40,6 @@ const ConnectionForm = ({ setPanel, setConnectionsState }) => {
     // remove dropdown and update to database_type
     data.database_type = data.dropdown;
     const { dropdown, ...updatedData } = data;
-    console.log(updatedData);
     dbConnectService
       .testConnection(updatedData)
       .then((res) => {
@@ -50,7 +51,7 @@ const ConnectionForm = ({ setPanel, setConnectionsState }) => {
         setSuccessfulSaveConnection(true);
         alertService.success("Connection Information Saved");
         setLoadingMsg(null);
-        setConnectionsState((prevState) => [...prevState, res]);
+        setConnectionsData((prevState) => [...prevState, res]);
       })
       .catch((err) => {
         // console.log(err)

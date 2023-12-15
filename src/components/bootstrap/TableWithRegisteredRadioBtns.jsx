@@ -1,9 +1,9 @@
 const TableWithRegisteredRadioBtns = ({
-  tableData,
-  tableHeader,
-  register,
-  errors,
-  registerName,
+  tableData = [],
+  tableHeader = "",
+  register = () => {},
+  errors = {},
+  registerName = "",
 }) => {
   if (tableData.length === 0){
     return <h3 className="fs-4 text-center w-100 mt-3">No Information Available...</h3>

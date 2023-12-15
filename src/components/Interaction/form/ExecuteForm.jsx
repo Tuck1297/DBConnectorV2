@@ -10,8 +10,10 @@ import TableWithRegisteredRadioBtns from "@/components/bootstrap/TableWithRegist
 import { dbConnectService } from "@/services/dbConnectService";
 import { queryFilter } from "@/hooks/queryFilter";
 import { QueryExecuteContext } from "@/components/context/QueryExecuteContext";
-const ExecuteForm = ({ connections }) => {
-    const { setRowData } = useContext(QueryResultsContext);
+import { ConnectionsContext } from "@/components/context/ConnectionsContext";
+const ExecuteForm = () => {
+  const { setRowData } = useContext(QueryResultsContext);
+  const { connectionsData, setConnectionsData } = useContext(ConnectionsContext);
   const { executeData, setExecuteData } = useContext(QueryExecuteContext);
   const [numTextAreas, setNumTextAreas] = useState(Object.keys(executeData));
   const [loading, setLoading] = useState(false);
@@ -89,7 +91,7 @@ const ExecuteForm = ({ connections }) => {
           );
         })}
         <TableWithRegisteredRadioBtns
-          tableData={connections}
+          tableData={connectionsData}
           register={register}
           registerName="dbConnectId"
           errors={errors}

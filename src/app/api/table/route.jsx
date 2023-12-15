@@ -11,11 +11,8 @@ import { dbConnectionManagement } from "@/server/api/db-connection-management";
 export async function GET(request, context) {
   try {
     const session = await getServerSession(authOptions);
-    await apiSetup(request, true, session);
-    const dbId = request.query.dbId;
-    let connectionObj = await dbConnectionManagement.getConnection(dbId);
-    let tables = await dbCmdExecute.getTables(connectionObj);
-    return NextResponse.json(tables);
+    await apiSetup(request, true);
+    return NextResponse.json("Hello from the server! - api/table");
   } catch (error) {
     return errorHandler(error);
   }

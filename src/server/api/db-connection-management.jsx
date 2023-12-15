@@ -115,9 +115,9 @@ async function getConnection(id) {
 }
 
 async function updateUserCurrentInteracting(userId, connectionId) {
-  const userSchema = z.string().uuid({ message: "Invalid ID" });
+  const userSchema = z.string({message: "UserId is missing."}).uuid({ message: "Invalid ID" });
   userSchema.parse(userId);
-  const connectionSchema = z.string().uuid({ message: "Invalid ID" });
+  const connectionSchema = z.string({message: "Connection id is missing."}).uuid({ message: "Invalid ID" });
   connectionSchema.parse(connectionId);
   const user = await db.User.findByPk(userId);
   user.current_db_interacting = connectionId;

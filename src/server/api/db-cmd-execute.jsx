@@ -55,11 +55,27 @@ async function getTables(connectionObj, userid) {
   const tempSequelize = createDbConnectionPoint(connectionObj);
 
   // Get the tables
+  // const tables = await tempSequelize.query(
+  //   "SELECT * FROM information_schema.tables WHERE table_schema = 'public'",
+  //   { type: Sequelize.QueryTypes.SELECT }
+  // );
+
   const tables = await tempSequelize.query(
-    "SELECT * FROM information_schema.tables WHERE table_schema = 'public'",
+    `SELECT
+    tables.table_name,
+    columns.column_name,
+    columns.data_type
+  FROM
+    information_schema.tables
+  INNER JOIN
+    information_schema.columns
+  ON
+    tables.table_name = columns.table_name
+    AND tables.table_schema = columns.table_schema
+  WHERE
+    tables.table_schema = 'public' ORDER BY tables.table_name ASC`,
     { type: Sequelize.QueryTypes.SELECT }
   );
-
   // Update the user's current interacting db
   dbConnectionManagement.updateUserCurrentInteracting(userid, connectionObj.id);
   return tables;
@@ -199,11 +215,13 @@ function createDbConnectionPoint(connectObj) {
     `${connectObj.database_type}://${connectObj.user_id}:${connectObj.password}@${connectObj.host}:${connectObj.port}/${connectObj.database_name}`,
     {
       dialectModule: pg,
-      dialectOptions: {
-        ssl: {
-          rejectUnauthorized: false,
-        },
-      },
+      dialectOptions: connectObj.host.includes("localhost")
+        ? {}
+        : {
+            ssl: {
+              rejectUnauthorized: false,
+            },
+          },
     }
   );
 }
