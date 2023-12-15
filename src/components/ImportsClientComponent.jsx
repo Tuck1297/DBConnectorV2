@@ -18,6 +18,7 @@ const ImportsComponent = ({ children }) => {
   const [managePanelState, setManagePanelState] = useState({
     selectedDB: null,
     selectedTable: null,
+    tablesInSelectedDB: [],
     tableInfo: null,
   });
   useEffect(() => {

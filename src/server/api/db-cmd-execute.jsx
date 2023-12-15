@@ -81,7 +81,18 @@ async function getTables(connectionObj, userid) {
   return tables;
 }
 async function getTableRows() {}
-async function getTableColumns() {}
+async function getTableColumns(tableName, connectInfo) {
+  // Create a new Sequelize instance with the connection string
+  const tempSequelize = createDbConnectionPoint(connectInfo);
+
+  // Get the columns
+  const columns = await tempSequelize.query(
+    `SELECT column_name, data_type FROM information_schema.columns WHERE table_name = '${tableName}'`,
+    { type: Sequelize.QueryTypes.SELECT }
+  );
+
+  return columns;
+}
 async function updateTableRow(newRowUpdateObj, oldRowUpdateObj, connectionObj) {
   // TODO: add validation
   // Create a new Sequelize instance with the connection string

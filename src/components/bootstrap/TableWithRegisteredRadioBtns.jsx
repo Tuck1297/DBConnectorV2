@@ -4,6 +4,7 @@ const TableWithRegisteredRadioBtns = ({
   register = () => {},
   errors = {},
   registerName = "",
+  valueId = "id",
 }) => {
   if (tableData.length === 0){
     return <h3 className="fs-4 text-center w-100 mt-3">No Information Available...</h3>
@@ -46,7 +47,7 @@ const TableWithRegisteredRadioBtns = ({
                       id={`${registerName
                         .replaceAll(" ", "_")
                         .toLowerCase()}${index}`}
-                      value={row.id}
+                      value={row[valueId]}
                     />
                   </div>
                 </td>

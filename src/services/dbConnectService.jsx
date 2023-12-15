@@ -28,8 +28,8 @@ async function getTables(dbId) {
 async function getTableRows() {
  return await fetchWrapper.get(baseUrl + "/table_rows");
 }
-async function getTableColumns() {
- return await fetchWrapper.get(baseUrl + "/table_cols");
+async function getTableColumns(tableName) {
+ return await fetchWrapper.get(baseUrl + `/table_cols/${tableName}`);
 }
 async function updateTableRow(toUpdate, oldRow) {
  return await fetchWrapper.put(baseUrl + "/table_row", {update: toUpdate, old: oldRow});
