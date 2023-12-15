@@ -9,6 +9,7 @@ import BracesAsteriskIcon from "../icons/BracesAsterisk";
 import ViewStacked from "../icons/ViewStacked";
 import GearWideConnect from "../icons/GearWideConnect";
 import HashIcon from "../icons/Hash";
+import BookIcon from "../icons/Book";
 const Sidebar = ({ children, setPanel }) => {
   return (
     <>
@@ -38,10 +39,11 @@ const Sidebar = ({ children, setPanel }) => {
                     <ViewStacked size={24} color="white" />,
                     <AsteriskIcon size={24} color="white" />,
                     <BracesAsteriskIcon size={24} color="white" />,
-                    <GearWideConnect size={24} color="white" />
+                    <GearWideConnect size={24} color="white" />,
+                    <BookIcon size={24} color="white"/>
                 ]}
                   subMenuName="Database Ops"
-                  navElements={["View", "Execute", "Build", "Connection"]}
+                  navElements={["View", "Execute", "Build", "Connection", "Manage"]}
                   setPanel={setPanel}
                 ></CollapseSidebarNav>
                 <CollapseSidebarNav

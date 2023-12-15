@@ -15,9 +15,10 @@ The initial tech stack for this application will focus on React.js and Next.js. 
 - [ ] when links are involved allow one to click on a link where a new page will open up to view the direction of the link
 - [ ] integrate ai into build query component
 
-- [ ] allow options to save commonly used and accessed queries for later use in a database
+- [ ] allow options to save commonly used and accessed queries for later use in a database - require table in database to store selected queries
 - [ ] when page is refreshed panel currently in on database page will remain open (currently refresh to home page)
-- [ ] create a new panel called Manage - this is panel to access unique forms, delete database, delete tables, delete entire columns and perform other operations.
+- [IN PROGRESS] create a new panel called Manage - this is panel to access unique forms, delete database, delete tables, delete entire columns and perform other operations.
+- [ ] look into feasability of being able to cancel a current database execution
 
 #### Forms
 - [X] Create a page that handles Executing database queries

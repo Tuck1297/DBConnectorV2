@@ -8,6 +8,7 @@ import ViewPanel from "@/components/panels/View";
 import PostgresPanel from "@/components/panels/Postgres";
 import SqlPanel from "@/components/panels/Sql";
 import MongodbPanel from "@/components/panels/Mongodb";
+import ManagePanel from "./panels/Manage";
 import Modal from "./bootstrap/Modal";
 import { useState, useContext, useEffect } from "react";
 import { ConnectionsContext } from "./context/ConnectionsContext";
@@ -20,11 +21,12 @@ const DBPage = ({ connections }) => {
       console.log("Modal Action");
     },
   });
-  const { connectionsData, setConnectionsData } = useContext(ConnectionsContext);
+  const { connectionsData, setConnectionsData } =
+    useContext(ConnectionsContext);
 
   useEffect(() => {
     setConnectionsData(connections);
-  }, [])
+  }, []);
   return (
     <>
       <Modal
@@ -34,15 +36,13 @@ const DBPage = ({ connections }) => {
       />
       <Sidebar setPanel={setPanel}>
         {panel === "home" && <HomePanel />}
-        {panel === "view" && <ViewPanel setModal={setModal}/>}
-        {panel === "execute" && <ExecutePanel/>}
+        {panel === "view" && <ViewPanel setModal={setModal} />}
+        {panel === "execute" && <ExecutePanel />}
         {panel === "build" && <BuildPanel />}
         {panel === "connection" && (
-          <ConnectionPanel
-            setPanel={setPanel}
-            setModal={setModal}
-          />
+          <ConnectionPanel setPanel={setPanel} setModal={setModal} />
         )}
+        {panel === "manage" && <ManagePanel />}
         {panel === "postgres" && <PostgresPanel />}
         {panel === "sql" && <SqlPanel />}
         {panel === "mongodb" && <MongodbPanel />}

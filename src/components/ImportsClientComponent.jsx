@@ -5,6 +5,7 @@ import { QueryBuilderContext } from "./context/QueryBuilderContext";
 import { QueryExecuteContext } from "./context/QueryExecuteContext";
 import { ConnectionsContext } from "./context/ConnectionsContext";
 import { TablesContext } from "./context/TablesContext";
+import { ManagePanelContext } from "./context/ManagePanelContext";
 // CSS
 import "../styles/globals.css";
 
@@ -14,6 +15,11 @@ const ImportsComponent = ({ children }) => {
   const [executeData, setExecuteData] = useState({ querytoexecute: undefined });
   const [connectionsData, setConnectionsData] = useState([]);
   const [tablesData, setTablesData] = useState([]);
+  const [managePanelState, setManagePanelState] = useState({
+    selectedDB: null,
+    selectedTable: null,
+    tableInfo: null,
+  });
   useEffect(() => {
     import("bootstrap/dist/js/bootstrap.bundle.min");
   }, []);
@@ -25,7 +31,11 @@ const ImportsComponent = ({ children }) => {
             value={{ connectionsData, setConnectionsData }}
           >
             <TablesContext.Provider value={{ tablesData, setTablesData }}>
-              {children}
+              <ManagePanelContext.Provider
+                value={{ managePanelState, setManagePanelState }}
+              >
+                {children}
+              </ManagePanelContext.Provider>
             </TablesContext.Provider>
           </ConnectionsContext.Provider>
         </QueryExecuteContext.Provider>
