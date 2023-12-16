@@ -11,7 +11,7 @@ const Table = ({ data = [], tableHeader = "" }) => {
   const columns = Object.keys(data[0]);
 
   return (
-    <>
+    <section className="border border-2 rounded">
       <h3 className="fs-4 text-center w-100 mt-3">{tableHeader}</h3>
       <section className="table-container">
         <table className="table">
@@ -40,7 +40,7 @@ const Table = ({ data = [], tableHeader = "" }) => {
           </tbody>
         </table>
       </section>
-    </>
+    </section>
   );
 };
 

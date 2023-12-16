@@ -20,7 +20,7 @@ const ConnectionView = ({ setPanel, setModal }) => {
                 type="button"
                 actionWord="Delete"
                 onSubmit={() => {
-                  console.log("Delete Connection. ID: " + connection.id);
+                  // console.log("Delete Connection. ID: " + connection.id);
                   // TODO: complete this functionality for deleteing a database connection
                   // setModal
                   // if delete button on modal clicked then delete connection

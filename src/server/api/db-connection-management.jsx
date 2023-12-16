@@ -125,11 +125,11 @@ async function updateUserCurrentInteracting(userId, connectionId) {
 }
 
 async function updateTableCurrentInteracting(connectionId, tableName) {
-  console.log("updateTableCurrentInteracting", connectionId, tableName);
+  // console.log("updateTableCurrentInteracting", connectionId, tableName);
   const connectionSchema = z.string().uuid({ message: "Invalid ID" });
   connectionSchema.parse(connectionId);
   const connection = await db.ConnectingInfo.findByPk(connectionId);
-  console.log("connection", connection);
+  // console.log("connection", connection);
   connection.current_table_interacting = tableName;
   await connection.save();
 }

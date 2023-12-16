@@ -115,8 +115,8 @@ async function updateTableRow(newRowUpdateObj, oldRowUpdateObj, connectionObj) {
   updateQuery = updateQuery.slice(0, -2);
   whereConditions = whereConditions.slice(0, -5);
   updateQuery += ` ${whereConditions}`;
-  console.log("updateQuery: ", updateQuery);
-  console.log("params: ", params);
+  // console.log("updateQuery: ", updateQuery);
+  // console.log("params: ", params);
   // Execute the update query
   await tempSequelize.query(updateQuery, params);
 }

@@ -14,7 +14,10 @@ const ImportsComponent = ({ children }) => {
   const [builderData, setBuilderData] = useState("");
   const [executeData, setExecuteData] = useState({ querytoexecute: undefined });
   const [connectionsData, setConnectionsData] = useState([]);
-  const [tablesData, setTablesData] = useState([]);
+  const [tablesData, setTablesData] = useState({
+    data: [],
+    selectedDbName: "",
+  });
   const [managePanelState, setManagePanelState] = useState({
     selectedDB: null,
     selectedTable: null,

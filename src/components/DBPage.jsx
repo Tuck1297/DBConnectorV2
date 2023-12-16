@@ -12,7 +12,7 @@ import ManagePanel from "./panels/Manage";
 import Modal from "./bootstrap/Modal";
 import { useState, useContext, useEffect } from "react";
 import { ConnectionsContext } from "./context/ConnectionsContext";
-import CustomButton from "./interaction/inputs/CustomButton";
+import RadioButton from "./interaction/inputs/RadioButton";
 const DBPage = ({ connections }) => {
   const [panel, setPanel] = useState("home");
   const [modal, setModal] = useState({

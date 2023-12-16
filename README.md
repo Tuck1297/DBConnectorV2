@@ -30,6 +30,7 @@ The initial tech stack for this application will focus on React.js and Next.js. 
 - [ ] insert multiple rows of new data into a table at a time (NEW FORM)
 - [ ] Manage columns in a particular table (NEW FORM)
 - [ ] Manage Table (update name, delete) (NEW FORM)
+- [ ] Update row data - (MODAL FORM)
 
 ### NOTES
 4. in postgres docs maybe have them be related to a page in notion account - when page is updated in the application it is updated on the notion page??? - believe there is a notion api that I can integrate...

@@ -7,7 +7,6 @@ const ExecuteView = () => {
     <Page>
       <h1 className="text-center">Execute Query(s)</h1>
       <ExecuteForm/>
-      {/* TODO replace this with tables/Table */}
       <TablesViewByDB/>
     </Page>
   );

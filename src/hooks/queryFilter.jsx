@@ -3,7 +3,7 @@ export const queryFilter = (queries) => {
   const allValues = Object.values(allQueries);
   let selectCount = 0;
   let invalidQueryType = null;
-  console.log("allValues: ", allValues);
+  // console.log("allValues: ", allValues);
   allValues.forEach((query) => {
     if (query.toUpperCase().includes("SELECT")) {
       selectCount++;
