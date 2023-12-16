@@ -8,7 +8,7 @@ import { set, useForm } from "react-hook-form";
 import { authSchema } from "@/hooks/yupAuth";
 import { dbConnectService } from "@/services/dbConnectService";
 import { alertService } from "@/services/alertService";
-const ManagePanel = () => {
+const ManagePanel = ({ setModal }) => {
   const { managePanelState, setManagePanelState } =
     useContext(ManagePanelContext);
   const { connectionsData } = useContext(ConnectionsContext);
@@ -84,7 +84,7 @@ const ManagePanel = () => {
     dbConnectService
       .getTableColumns(data.tableradioselection)
       .then((res) => {
-        console.log("Columns: ",res);
+        console.log("Columns: ", res);
         // TODO: resart here...
         setLoading(false);
         setManagePanelState({
@@ -104,8 +104,9 @@ const ManagePanel = () => {
   return (
     <Page>
       <h1 className="text-center">Mange</h1>
-      {showDBs ? (
+      {showDBs && managePanelState.selectedDB === null ? (
         <form onSubmit={dbHandleSubmit(dbOnSubmit)} className="p-2">
+          {/* TODO replace this with tables/Table */}
           <TableWithRegisteredRadioBtns
             tableData={connectionsData}
             tableHeader="Select a Database..."
@@ -133,24 +134,40 @@ const ManagePanel = () => {
           />
         </>
       )}
-      {showTables ? (
-        <form onSubmit={tableHandleSubmit(tableOnSubmit)} className="p-2">
-          <TableWithRegisteredRadioBtns
-            tableData={managePanelState.tablesInSelectedDB}
-            tableHeader="Select a Table..."
-            register={tableRegister}
-            errors={tableErrors}
-            registerName="tableRadioSelection"
-            valueId="table_name"
-          />
+      {showTables && managePanelState.selectedTable === null ? (
+        <>
           <CustomButton
-            className="w-100 mt-2 mb-2"
-            type="submit"
-            actionWord="Submit"
-            isLoading={loading}
-            disabled={loading}
+            type="button"
+            actionWord="Delete Database"
+            className="w-100 mt-2 mb-2 btn-danger"
+            onSubmit={() => {
+              console.log("Delete Database");
+              setModal({
+                modalMsg: "Are you sure you want to delete this database?",
+                modalBtnActionName: "Delete",
+                modalAction: () => {console.log("Delete Database")},
+              });
+            }}
           />
-        </form>
+          <form onSubmit={tableHandleSubmit(tableOnSubmit)} className="p-2">
+            {/* TODO replace this with tables/Table */}
+            <TableWithRegisteredRadioBtns
+              tableData={managePanelState.tablesInSelectedDB}
+              tableHeader="Select a Table..."
+              register={tableRegister}
+              errors={tableErrors}
+              registerName="tableRadioSelection"
+              valueId="table_name"
+            />
+            <CustomButton
+              className="w-100 mt-2 mb-2"
+              type="submit"
+              actionWord="Submit"
+              isLoading={loading}
+              disabled={loading}
+            />
+          </form>
+        </>
       ) : (
         <>
           {managePanelState.selectedTable !== null ? (
@@ -175,6 +192,32 @@ const ManagePanel = () => {
       )}
       {showTableInfo ? (
         <>
+          <CustomButton
+            type="button"
+            actionWord="Delete Table"
+            className="w-100 mt-2 mb-2 bg-danger text-white"
+            onSubmit={() => {
+              setModal({
+                modalMsg: "Are you sure you want to delete this table?",
+                modalBtnActionName: "Delete",
+                modalAction: () => {
+                  console.log("Delete Table");
+                  // setLoading(true);
+                  // dbConnectService
+                  //   .deleteTable(managePanelState.selectedTable)
+                  //   .then((res) => {
+                  //     alertService.success(res);
+                  //     setLoading(false);
+                  //     restart();
+                  //   })
+                  //   .catch((err) => {
+                  //     alertService.error(err);
+                  //     setLoading(false);
+                  //   });
+                },
+              });
+            }}
+          />
           <p className="text-center fs-2">
             table information populated in forms with delete, update and other
             buttons and dropdowns and stuff {managePanelState.selectedTable}
@@ -201,12 +244,16 @@ export default ManagePanel;
 TODO: 
  - Need to create a new form that will explicitly work with manipulating column and table information
  TO IMPLEMENT IN NEW FORM
- 1. Delete a Table
- 2. Delete a Database
+ 1. Delete a Table - done
+ 2. Delete a Database - done
  3. Remove a column from a table
  4. Add a column to a table
  5. update the name of a column in a table
- 6. update the name of a table
+ 6. update the name of the table
  7. Insert one or many new rows into a table
 
+TODO: update the manage table component to have the following:
+1. delete option for whatever the row represents - with modal warning
+2. update option for whatever the row represents - with modal warning
+3. other custom action on row for whatever it represents - case: update and manage table (column update and so forth)
 */

@@ -55,6 +55,7 @@ const TablesViewByDB = ({}) => {
     <>
       {tablesData.length === 0 ? (
         <form onSubmit={handleSubmit(onSubmit)}>
+          {/* TODO replace this with tables/Table */}
           <TableWithRegisteredRadioBtns
             tableData={connectionsData}
             tableHeader="Select Database to see tables."

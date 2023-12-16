@@ -64,11 +64,14 @@ const BuildView = () => {
           ) : (
             <></>
           )}
+          {/* TODO replace this with tables/Table */}
           <TablesViewByDB/>
+          {/* TODO replace this with tables/Table */}
           <Table
             tableData={possiblePostgresDatatypes}
             tableHeader="Table DataTypes"
           />
+          {/* TODO replace this with tables/Table */}
           <Table
             tableData={possiblePostgresAggregates}
             tableHeader="Aggregate Functions"

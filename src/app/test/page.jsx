@@ -1,30 +1,19 @@
-"use client"
-import { dbConnectService } from "@/services/dbConnectService";
-import { useEffect } from "react";
-const TestPage = () => {
-    useEffect(() => {
-        testCall();
-    }, []);
+"use client";
 
-   async function testCall() {
-         dbConnectService.testConnection().then((res) => console.log(res)).catch((err) => console.error(err));
-        dbConnectService.getTables().then((res) => console.log(res)).catch((err) => console.error(err));
-        dbConnectService.getTableRows().then((res) => console.log(res)).catch((err) => console.error(err));
-        dbConnectService.getTableColumns().then((res) => console.log(res)).catch((err) => console.error(err));
-        dbConnectService.updateTableRow().then((res) => console.log(res)).catch((err) => console.error(err));
-        dbConnectService.updateTableCol().then((res) => console.log(res)).catch((err) => console.error(err));
-        dbConnectService.deleteTable().then((res) => console.log(res)).catch((err) => console.error(err));
-        dbConnectService.deleteTableRow().then((res) => console.log(res)).catch((err) => console.error(err));
-        dbConnectService.deleteTableColumn().then((res) => console.log(res)).catch((err) => console.error(err));
-        dbConnectService.addTable().then((res) => console.log(res)).catch((err) => console.error(err));
-        dbConnectService.addTableRow().then((res) => console.log(res)).catch((err) => console.error(err));
-        dbConnectService.addTableColumn().then((res) => console.log(res)).catch((err) => console.error(err));
-    }
+import CustomButton from "@/components/interaction/inputs/CustomButton";
+import Table from "@/components/tables/Table";
+
+const testData = [
+  { name: "test1", age: 22, zipcode: 12345, button: <CustomButton actionWord="Submit"  onSubmit={() => {console.log("button 1 clicked...")}} /> },
+  { name: "test2", age: 55, zipcode: 12345, button: <CustomButton actionWord="Delete"  onSubmit={() => {console.log("button 2 clicked...")}} /> },
+  { name: "test3", age: 23, zipcode: 12345, button: <CustomButton actionWord="Update"  onSubmit={() => {console.log("button 3 clicked...")}} /> },
+  { name: "test4", age: 2, zipcode: 12345, button: <CustomButton  actionWord="Fart" onSubmit={() => {console.log("button 4 clicked...")}} /> },
+];
+
+const TestPage = () => {
   return (
-    <div>
-      <h1>Test Page</h1>
-    </div>
+    <Table data={testData}/>
   );
-}
+};
 
 export default TestPage;

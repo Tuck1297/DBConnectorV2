@@ -1,26 +1,27 @@
 "use client";
 import TextArea from "../inputs/Textarea";
 import CustomButton from "../inputs/CustomButton";
+import RadioButton from "../inputs/RadioButton";
 import { useState, useContext } from "react";
 import { QueryResultsContext } from "@/components/context/QueryResultsContext";
 import { alertService } from "@/services/alertService";
 import { useForm } from "react-hook-form";
 import { authSchema } from "@/hooks/yupAuth";
-import TableWithRegisteredRadioBtns from "@/components/bootstrap/TableWithRegisteredRadioBtns";
 import { dbConnectService } from "@/services/dbConnectService";
 import { queryFilter } from "@/hooks/queryFilter";
 import { QueryExecuteContext } from "@/components/context/QueryExecuteContext";
 import { ConnectionsContext } from "@/components/context/ConnectionsContext";
+import Table from "@/components/tables/Table";
 const ExecuteForm = () => {
   const { setRowData } = useContext(QueryResultsContext);
-  const { connectionsData, setConnectionsData } = useContext(ConnectionsContext);
+  const { connectionsData, setConnectionsData } =
+    useContext(ConnectionsContext);
   const { executeData, setExecuteData } = useContext(QueryExecuteContext);
   const [numTextAreas, setNumTextAreas] = useState(Object.keys(executeData));
   const [loading, setLoading] = useState(false);
   const [schema, setSchema] = useState(
     authSchema({ queryToExecute: true, dbconnectid: true })
   );
-
 
   const {
     register,
@@ -69,7 +70,10 @@ const ExecuteForm = () => {
 
   return (
     <section className="p-2">
-      <p>NOTE: One query per textarea. Tables get wrapped with double quotes and data values and parts of conditions get wrapped in single quotes.</p>
+      <p>
+        NOTE: One query per textarea. Tables get wrapped with double quotes and
+        data values and parts of conditions get wrapped in single quotes.
+      </p>
       <form onSubmit={handleSubmit(onSubmit)}>
         {numTextAreas.map((textAreaName, index) => {
           return (
@@ -79,24 +83,36 @@ const ExecuteForm = () => {
                 errors={errors}
                 className="mb-2"
                 label={textAreaName}
-                value={executeData[textAreaName.toLowerCase().replaceAll(" ", "_")]}
+                value={
+                  executeData[textAreaName.toLowerCase().replaceAll(" ", "_")]
+                }
                 onChange={(e) => {
                   setExecuteData({
                     ...executeData,
-                    [textAreaName.toLowerCase().replaceAll(" ", "_")]: e.target.value
-                  })
+                    [textAreaName.toLowerCase().replaceAll(" ", "_")]:
+                      e.target.value,
+                  });
                 }}
               />
             </span>
           );
         })}
-        <TableWithRegisteredRadioBtns
-          tableData={connectionsData}
-          register={register}
-          registerName="dbConnectId"
-          errors={errors}
+        <Table
+          data={connectionsData.map((connection) => {
+            return {
+              Select: (
+                <RadioButton
+                  register={register}
+                  value={connection.id}
+                  registerGroupName="dbConnectId"
+                />
+              ),
+              ...connection,
+            };
+          })}
           tableHeader="Select Database Connection"
         />
+        <div className="text-danger mb-3">{errors?.dbconnectid?.message}</div>
         <CustomButton
           onSubmit={() => {
             const newTextAreaName = `queryToExecute${numTextAreas.length + 1}`;

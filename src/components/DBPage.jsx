@@ -12,6 +12,7 @@ import ManagePanel from "./panels/Manage";
 import Modal from "./bootstrap/Modal";
 import { useState, useContext, useEffect } from "react";
 import { ConnectionsContext } from "./context/ConnectionsContext";
+import CustomButton from "./interaction/inputs/CustomButton";
 const DBPage = ({ connections }) => {
   const [panel, setPanel] = useState("home");
   const [modal, setModal] = useState({
@@ -42,7 +43,7 @@ const DBPage = ({ connections }) => {
         {panel === "connection" && (
           <ConnectionPanel setPanel={setPanel} setModal={setModal} />
         )}
-        {panel === "manage" && <ManagePanel />}
+        {panel === "manage" && <ManagePanel setModal={setModal} />}
         {panel === "postgres" && <PostgresPanel />}
         {panel === "sql" && <SqlPanel />}
         {panel === "mongodb" && <MongodbPanel />}
