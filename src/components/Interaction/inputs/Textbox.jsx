@@ -11,8 +11,8 @@ const TextBox = ({
   errors = {},
   onChange = (e) => {
     e.preventDefault();
-    // console.log(e.target.value);
-    setInputValue(e.target.value);
+    console.log(e.target.value);
+    // setInputValue(e.target.value);
   },
 }) => {
   // const [inputValue, setInputValue] = useState(input);
@@ -20,9 +20,7 @@ const TextBox = ({
     <section className="mb-3 form-floating">
       <input
         value={input}
-        onChange={(e) => {
-          // console.log(e.target.value);
-        }}
+        onChange={(e) => {e.preventDefault(); onChange(e)}}
         type={inputType}
         className={`form-control ${className} ${
           errors?.[label.replace(" ", "_").toLowerCase()] ? "is-invalid" : ""

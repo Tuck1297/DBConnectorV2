@@ -72,7 +72,7 @@ const ExecuteForm = () => {
     <section className="p-2">
       <p>
         NOTE: One query per textarea. Tables get wrapped with double quotes and
-        data values and parts of conditions get wrapped in single quotes.
+        data values and parts of conditions get wrapped in single quotes. Please add no semicolons.
       </p>
       <form onSubmit={handleSubmit(onSubmit)}>
         {numTextAreas.map((textAreaName, index) => {
