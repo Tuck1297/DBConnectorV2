@@ -28,9 +28,10 @@
   },
   "CREATE": {
     "exampleQueries": [
-      "CREATE TABLE table_name (column1 datatype1, column2 datatype2);"
+      "CREATE TABLE table_name (column1 datatype1, column2 datatype2);",
+      "CREATE DATABASE yourdatabasename;"
     ],
-    "desc": "Create a new table with different properties.",
+    "desc": "Create a new table with different properties. Or a new database.",
     "desc2": "Datatypes can include: INT, VARCHAR(size), BOOLEAN, DATE, TEXT, FLOAT, DATE, TIME, TIMESTAMP, etc... See more below."
   },
   "UPSERT": {

@@ -162,6 +162,17 @@ const ExecuteForm = () => {
           type="button"
           onSubmit={() => {
             reset();
+            numTextAreas.forEach((textAreaName) => {
+              unregister(textAreaName.toLowerCase());
+            });
+            setExecuteData({ querytoexecute: undefined });
+            setNumTextAreas(["queryToExecute"]);
+            setSchema(
+              authSchema({
+                queryToExecute: true,
+                dbconnectid: true,
+              })
+            );
           }}
           actionWord="Reset"
           disabled={loading}

@@ -2,6 +2,7 @@
 
 // NOTE: Relies on the fact that data is formatted as an array of objects
 const Table = ({ data = [], tableHeader = "" }) => {
+  console.log(data)
   if (data.length === 0) {
     return (
       <h3 className="fs-4 text-center w-100 mt-3">Nothing to see here...</h3>
@@ -33,7 +34,7 @@ const Table = ({ data = [], tableHeader = "" }) => {
                 } text-center`}
               >
                 {columns.map((key, colIndex) => (
-                  <td key={colIndex}>{row[key]}</td>
+                  <td key={colIndex}>{typeof row[key] === "object" && row[key].$$typeof === undefined ? "IS OBJECT" : row[key]}</td>
                 ))}
               </tr>
             ))}
