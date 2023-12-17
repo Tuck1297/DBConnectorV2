@@ -1,15 +1,17 @@
 import Page from "../bootstrap/Page";
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useRef } from "react";
 import { ManagePanelContext } from "../context/ManagePanelContext";
 import CustomButton from "../interaction/inputs/CustomButton";
 import { ConnectionsContext } from "../context/ConnectionsContext";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { authSchema } from "@/hooks/yupAuth";
 import { dbConnectService } from "@/services/dbConnectService";
 import { alertService } from "@/services/alertService";
 import Table from "../tables/Table";
 import RadioButton from "../interaction/inputs/RadioButton";
 import TextBox from "../interaction/inputs/Textbox";
+import ColumnNameUpdateForm from "../interaction/form/ColumnNameUpdateForm";
+import TableNameUpdateForm from "../interaction/form/TableNameUpdateForm";
 const ManagePanel = ({ setModal }) => {
   const { managePanelState, setManagePanelState } =
     useContext(ManagePanelContext);
@@ -21,6 +23,8 @@ const ManagePanel = ({ setModal }) => {
     managePanelState.tableInfo !== null ? true : false
   );
   const [newColName, setNewColName] = useState({});
+  const updateColumnNameRef = useRef();
+  const updateTableNameRef = useRef();
 
   function restart() {
     setManagePanelState({
@@ -105,6 +109,14 @@ const ManagePanel = ({ setModal }) => {
       });
   }
 
+  function getNewColumnName() {
+    return updateColumnNameRef.current.getNewColumnName();
+  }
+
+  function getNewTableName() {
+    return updateTableNameRef.current.getNewTableName();
+  }
+
   return (
     <Page>
       <h1 className="text-center">Mange</h1>
@@ -160,7 +172,7 @@ const ManagePanel = ({ setModal }) => {
                 modalBtnActionName: "Delete",
                 modalAction: () => {
                   // TODO: delete database and remove connection string from connections
-                  // console.log("Delete Database " + managePanelState.selectedDB);
+                  console.log("Delete Database " + managePanelState.selectedDB);
                 },
               });
             }}
@@ -179,6 +191,25 @@ const ManagePanel = ({ setModal }) => {
                     />
                   ),
                   ...table,
+                  Delete: (
+                    <CustomButton
+                      type="button"
+                      actionWord="Delete"
+                      className="btn-danger"
+                      onSubmit={() => {
+                        setModal({
+                          modalMsg: `Are you sure you want to delete ${table.table_name}?`,
+                          modalBtnActionName: "Delete",
+                          modalAction: () => {
+                            // TODO: delete table from database
+                            console.log("Delete " + table.table_name);
+                          },
+                        });
+                      }}
+                      data-bs-toggle="modal"
+                      data-bs-target="#staticBackdrop"
+                    />
+                  ),
                 };
               })}
               tableHeader="Select a Table..."
@@ -219,79 +250,31 @@ const ManagePanel = ({ setModal }) => {
       )}
       {showTableInfo ? (
         <>
-          <CustomButton
-            type="button"
-            actionWord="Delete Table"
-            className="w-100 btn-danger mt-2 mb-2"
-            onSubmit={() => {
-              setModal({
-                modalMsg: "Are you sure you want to delete this table?",
-                modalBtnActionName: "Delete",
-                modalAction: () => {
-                  // console.log("Delete Table " + managePanelState.selectedTable);
-                  // TODO: complete deleteing a table from the database
-                  // setLoading(true);
-                  // dbConnectService
-                  //   .deleteTable(managePanelState.selectedTable)
-                  //   .then((res) => {
-                  //     alertService.success(res);
-                  //     setLoading(false);
-                  //     restart();
-                  //   })
-                  //   .catch((err) => {
-                  //     alertService.error(err);
-                  //     setLoading(false);
-                  //   });
-                },
-              });
-            }}
-            data-bs-toggle="modal"
-            data-bs-target="#staticBackdrop"
-          />
-          {/* <p className="text-center fs-2">
-            table information populated in forms with delete, update and other
-            buttons and dropdowns and stuff {managePanelState.selectedTable}
-          </p> */}
           <Table
             data={managePanelState.tableInfo.map((column, index) => {
               return {
                 ...column,
-                new_column_name: (
-                  <input
-                    className="form-control"
-                    onChange={(e) => {
-                      e.preventDefault();
-                      setNewColName({
-                        ...newColName,
-                        [column.column_name]: e.target.value,
-                      });
-                    }}
-                  ></input>
-                ),
                 Update: (
                   <CustomButton
                     type="button"
                     actionWord="Update"
                     className="btn-primary"
                     onSubmit={() => {
-                      if (newColName[column.column_name] === undefined) {
-                        alert(
-                          "Please enter a new column name for " +
-                            column.column_name
-                        );
-                        return;
-                      }
                       setModal({
-                        modalMsg: `Are you sure you want to update ${
-                          column.column_name
-                        } to ${newColName[column.column_name]}?`,
+                        modalMsg: (
+                          <ColumnNameUpdateForm
+                            ref={updateColumnNameRef}
+                            column={column}
+                          />
+                        ),
                         modalBtnActionName: "Update",
                         modalAction: () => {
+                          // TODO: update column name
                           console.log(
                             "Update " +
                               column.column_name +
                               " to " +
-                              newColName[column.column_name]
+                              getNewColumnName()
                           );
                         },
                       });
@@ -310,6 +293,7 @@ const ManagePanel = ({ setModal }) => {
                         modalMsg: `Are you sure you want to delete ${column.column_name} column?`,
                         modalBtnActionName: "Delete",
                         modalAction: () => {
+                          // TODO: delete column from table
                           console.log("Delete " + column.column_name);
                         },
                       });
@@ -324,18 +308,30 @@ const ManagePanel = ({ setModal }) => {
           />
 
           <section className="border border-5 p-2 d-flex justify-content-center align-items-center">
-            <input
-            type="text"
-            className="form-control"
-            placeholder={managePanelState.selectedTable}
-            />
             <CustomButton
               type="button"
               actionWord="Update Table Name"
               onSubmit={() => {
-                console.log("Update Table Name");
+                setModal({
+                  modalMsg: (
+                    <TableNameUpdateForm
+                      ref={updateTableNameRef}
+                      table={managePanelState.selectedTable}
+                    />
+                  ),
+                  modalBtnActionName: "Update",
+                  modalAction: () => {
+                    // TODO: update table name
+                    console.log(
+                      "Update " +
+                        managePanelState.selectedTable +
+                        " to " +
+                        getNewTableName()
+                    );
+                  },
+                });
               }}
-              className="btn-danger ms-2"
+              className="btn-danger ms-2 w-100"
               data-bs-toggle="modal"
               data-bs-target="#staticBackdrop"
             />
@@ -358,16 +354,3 @@ const ManagePanel = ({ setModal }) => {
 };
 
 export default ManagePanel;
-
-/*
-TODO: 
- - Need to create a new form that will explicitly work with manipulating column and table information
- TO IMPLEMENT IN NEW FORM
- 1. Delete a Table - front end added
- 2. Delete a Database - front end added
- 3. Remove a column from a table - front end added
- 4. Add a column to a table - keep this a custom query for now...
- 5. update the name of a column in a table - front end added
- 6. update the name of the table - front end added
- 7. Insert one or many new rows into a table -- later
-*/

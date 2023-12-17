@@ -17,20 +17,20 @@ The initial tech stack for this application will focus on React.js and Next.js. 
 
 - [ ] allow options to save commonly used and accessed queries for later use in a database - require table in database to store selected queries
 - [ ] when page is refreshed panel currently in on database page will remain open (currently refresh to home page)
-- [IN PROGRESS] create a new panel called Manage - this is panel to access unique forms, delete database, delete tables, delete entire columns and perform other operations.
+- [X] create a new panel called Manage - this is panel to access unique forms, delete database, delete tables, delete entire columns and perform other operations.
 - [ ] look into feasability of being able to cancel a current database execution
 
 #### Forms
 - [X] Create a page that handles Executing database queries
 - [ ] Select and delete multiple rows in a database (FEATURE TO CURRENT)
-- [ ] delete a table in a database (NEW FORM)
 - [ ] delete a database itself - and also remove the connection to that database (NEW FORM)
 - [X] easily craft simple queries by interacting with a ui
 - [X] in execute and builder panels have a component that will allow user to view all tables (and their columns) within a specific database
 - [ ] insert multiple rows of new data into a table at a time (NEW FORM)
-- [ ] Manage columns in a particular table (NEW FORM)
-- [ ] Manage Table (update name, delete) (NEW FORM)
-- [ ] Update row data - (MODAL FORM)
+- [ ] Manage columns in a particular table (NEW FORM) - still working on
+- [ ] Manage Table (update name, delete) (Manage Panel - Module popup for both operations)
+- [X] Update row data - (MODAL FORM)
+- [ ] Add a new column to a table form
 
 ### NOTES
 4. in postgres docs maybe have them be related to a page in notion account - when page is updated in the application it is updated on the notion page??? - believe there is a notion api that I can integrate...
