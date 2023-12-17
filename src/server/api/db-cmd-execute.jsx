@@ -19,6 +19,7 @@ export const dbCmdExecute = {
   addTableRow,
   addTableColumn,
   executeCustomQueries,
+  deleteDatabase
 };
 
 async function testConnection(connectObj) {
@@ -121,7 +122,13 @@ async function updateTableRow(newRowUpdateObj, oldRowUpdateObj, connectionObj) {
   await tempSequelize.query(updateQuery, params);
 }
 async function updateTableCol(colUpdateObj) {}
-async function deleteTable(tableName) {}
+async function deleteTable(tableName, connectObj) {
+  // Create a new Sequelize instance with the connection string
+  const tempSequelize = createDbConnectionPoint(connectObj);
+
+  // Drop the table
+  await tempSequelize.query(`DROP TABLE ${tableName}`);
+}
 async function deleteTableRow(rowToDeleteObj, connectionObj) {
   // TODO: add validation
   // Create a new Sequelize instance with the connection string
@@ -143,10 +150,25 @@ async function deleteTableRow(rowToDeleteObj, connectionObj) {
   // Execute the delete query
   await tempSequelize.query(deleteQuery, params);
 }
-async function deleteTableColumn(colName) {}
+async function deleteTableColumn(colName, tableName, connectObj) {
+  // Create a new Sequelize instance with the connection string
+  const tempSequelize = createDbConnectionPoint(connectObj);
+
+  // Drop the column
+  await tempSequelize.query(
+    `ALTER TABLE ${tableName} DROP COLUMN ${colName}`
+  );
+}
 async function addTable(tableToAddObj) {}
 async function addTableRow(rowToAddObj) {}
 async function addTableColumn(ColToAddObj) {}
+async function deleteDatabase(connectObj) {
+  // Create a new Sequelize instance with the connection string
+  const tempSequelize = createDbConnectionPoint(connectObj);
+
+  // Drop the database
+  await tempSequelize.query(`DROP DATABASE ${connectObj.database_name}`);
+}
 
 async function executeCustomQueries(queryObj, connectionObj) {
   // create connection

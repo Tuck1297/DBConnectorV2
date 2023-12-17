@@ -9,13 +9,15 @@ export const dbConnectService = {
   getTableColumns,
   updateTableRow,
   updateTableCol,
+  updateTable,
   deleteTable,
   deleteTableRow,
   deleteTableColumn,
   addTable,
   addTableRow,
   addTableColumn,
-  executeCustomQueries
+  executeCustomQueries,
+  deleteDatabase
 }; 
 
 async function testConnection(connectionObj) {
@@ -34,20 +36,20 @@ async function getTableColumns(tableName) {
 async function updateTableRow(toUpdate, oldRow) {
  return await fetchWrapper.put(baseUrl + "/table_row", {update: toUpdate, old: oldRow});
 }
-async function updateTableCol(toUpdate) {
- return await fetchWrapper.put(baseUrl + "/table_col", toUpdate);
+async function updateTableCol(toUpdate, oldCol) {
+ return await fetchWrapper.put(baseUrl + "/table_col", {toUpdate, oldCol});
 }
-async function updateTable(toUpdate) {
- return await fetchWrapper.put(baseUrl + "/table", toUpdate);
+async function updateTable(toUpdate, oldData) {
+ return await fetchWrapper.put(baseUrl + "/table", {toUpdate, oldData});
 }
 async function deleteTable(tableName) {
- return await fetchWrapper.delete(baseUrl + `/table`, { name: tableName });
+ return await fetchWrapper.delete(baseUrl + `/table`, tableName );
 }
 async function deleteTableRow(row) {
  return await fetchWrapper.delete(baseUrl + `/table_row`, row);
 }
-async function deleteTableColumn(colName) {
- return await fetchWrapper.delete(baseUrl + `/table_col`, { name: colName });
+async function deleteTableColumn(colName, tableName) {
+ return await fetchWrapper.delete(baseUrl + `/table_col`, {colName, tableName} );
 }
 async function addTable(tableToAdd) {
  return await fetchWrapper.post(baseUrl + "/table", tableToAdd);
@@ -61,4 +63,8 @@ async function addTableColumn(colToAdd) {
 
 async function executeCustomQueries(queries) {
  return await fetchWrapper.post(baseUrl + "/custom_queries", queries);
+}
+
+async function deleteDatabase(dbId) {
+ return await fetchWrapper.delete(baseUrl + `/database`, dbId);
 }
