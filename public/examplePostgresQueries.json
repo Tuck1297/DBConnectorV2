@@ -9,7 +9,8 @@
   },
   "INSERT": {
     "exampleQueries": [
-      "INSERT INTO table_name (column1, column2) VALUES (value1, value2)"
+      "INSERT INTO table_name (column1, column2) VALUES (value1, value2)",
+      "INSERT INTO employees (employee_id, first_name, last_name) VALUES (1, 'John', 'Doe'), (2, 'Jane', 'Smith'), (3, 'Bob', 'Johnson')"
     ],
     "desc": "Add new records to a table."
   },
